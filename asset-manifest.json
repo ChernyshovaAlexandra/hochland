@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.f58a874f.css",
-    "main.js": "/static/js/main.e2a1f3fa.js",
+    "main.js": "/static/js/main.977a47dd.js",
     "static/js/787.1bc118ff.chunk.js": "/static/js/787.1bc118ff.chunk.js",
     "static/media/pic-bg.jpg": "/static/media/pic-bg.b3d15a9a5298f2c1f22e.jpg",
     "static/media/logo_hochland.png": "/static/media/logo_hochland.fd0300ab648ecc052d7b.png",
@@ -29,11 +29,11 @@
     "static/media/arrT.svg": "/static/media/arrT.d6f52f5e08581eaf6e1cf3e43d96518c.svg",
     "static/media/arrB.svg": "/static/media/arrB.c7b04d9add51fe975ac50fb51b0b860f.svg",
     "main.f58a874f.css.map": "/static/css/main.f58a874f.css.map",
-    "main.e2a1f3fa.js.map": "/static/js/main.e2a1f3fa.js.map",
+    "main.977a47dd.js.map": "/static/js/main.977a47dd.js.map",
     "787.1bc118ff.chunk.js.map": "/static/js/787.1bc118ff.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f58a874f.css",
-    "static/js/main.e2a1f3fa.js"
+    "static/js/main.977a47dd.js"
   ]
 }

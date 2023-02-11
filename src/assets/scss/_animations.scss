@@ -1,8 +1,9 @@
 @keyframes baloon {
-    from {
+    0% {
         transform: translate(0);
     }
-    to {
+    40%,
+    100% {
         transform: translate(0, 100px);
     }
 }
@@ -12,7 +13,8 @@
         opacity: 1;
         transform-origin: center;
     }
-    35%,100% {
+    35%,
+    100% {
         transform: scale(0.5) translate(-80px, -440px);
         opacity: 0;
         transform-origin: center;
@@ -24,22 +26,70 @@
         opacity: 1;
         transform-origin: center;
     }
-    35%, 100% {
+    35%,
+    100% {
         transform: scale(0.5) translate(280px, -280px);
         opacity: 0;
         transform-origin: center;
     }
 }
 .heart-2 {
-    // opacity: 0;
+    opacity: 0;
     animation: 4.5s heart2 5s linear infinite;
 }
 .heart-1 {
+    opacity: 0;
     animation: 4s heart1 3s linear infinite;
 }
 .baloon {
     &-1 {
-        animation: 6s baloon 1s linear alternate infinite;
+        animation: 6s baloon ease-in-out alternate infinite;
     }
-    animation: 5s baloon 2s linear alternate infinite;
+    animation: 4.5s baloon ease-in-out alternate infinite;
+}
+.loader {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(3px);
+    display: grid;
+    place-items: center;
+    top: 0;
+    left: 0;
+}
+.spinner {
+    animation: rotate 2s linear infinite;
+    z-index: 2;
+    
+    margin: auto;
+    width: 50px;
+    height: 50px;
+
+    & .path {
+        stroke: $blue;
+        stroke-linecap: round;
+        animation: dash 1.5s ease-in-out infinite;
+    }
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes dash {
+    0% {
+        stroke-dasharray: 1, 150;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -35;
+    }
+    100% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -124;
+    }
 }

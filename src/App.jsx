@@ -8,19 +8,20 @@ import MyPropose from "./screens/MyPropose";
 import Button from "./components/Button";
 import './assets/scss/styles.scss'
 import API from "./utils/API";
+import Header from "./components/Header";
 
 
 
 
 
 const App = () => {
-  const [page, setPage] = useState('task')
+  const [page, setPage] = useState('main')
   const [vk_id, setId] = useState(null);
   const [name, setName] = useState(null);
   const [points, setPoints] = useState('0');
   const [reciever, setReciever] = useState();
   const [matter, setMatter] = useState();
-
+  const [loading, setLoading] = useState(false)
 
   const vkLogin = () => {
     bridge.subscribe((e) => {
@@ -40,7 +41,7 @@ const App = () => {
       vk_id: vk_id,
       name: name
     }).then(res => {
-      if (res.data) {
+      if (res.data.success) {
         setPoints(res.data.points)
       }
     })
@@ -58,7 +59,6 @@ const App = () => {
 
   return (
     <div className="content-main">
-
       {page === 'main' ? null :
         <>
           <div className="my-4 bg-red text-white px-4 py-2 rounded-full absolute top-2 right-0 left-0 mx-auto w-fit">Баллы {points}</div>
@@ -67,9 +67,18 @@ const App = () => {
       }
       {page === 'main' ? <Main setPage={setPage} />
         : page === 'cardgen' ? <CardGeneration setPage={setPage} setReciever={setReciever} setMatter={setMatter} />
-          : page === 'result' ? <Result setPage={setPage} reciever={reciever} matter={matter} /> :
+          : page === 'result' ? <Result setPage={setPage} reciever={reciever} matter={matter} vk_id={vk_id} setLoading={setLoading} /> :
             page === 'task' ? <Task /> :
-              <MyPropose />}
+              <MyPropose vk_id={vk_id} />}
+      {loading ? <div className="loader">
+        <div className="grid gap-4 items-center">
+          <Header text={loading} size="text-blue text-3xl mb-4 text-center" />
+          <svg class="spinner" viewBox="0 0 50 50">
+            <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+          </svg>
+        </div>
+
+      </div> : null}
     </div>
   );
 }

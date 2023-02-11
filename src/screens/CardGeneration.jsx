@@ -30,10 +30,10 @@ export const steps = [
         extraClasses: 'blue-bg round overflow-hidden main',
         // classes: 'bg-blue border-4 border-white w-40 sm:w-60',
         btns: [
-            { name: 'Путешествия', img: card5 },
-            { name: 'Развлечения', img: card6 },
-            { name: 'Спорт', img: card7 },
-            { name: 'Хобби', img: card8 }
+            { name: 'Путешествия', img: card5, category: 'trip' },
+            { name: 'Развлечения', img: card6, category: 'advertisement' },
+            { name: 'Спорт', img: card7, category: 'sport' },
+            { name: 'Хобби', img: card8, category: 'hobby' }
         ]
     }
 ]

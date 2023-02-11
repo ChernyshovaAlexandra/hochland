@@ -6,7 +6,7 @@ const GenerationContainer = ({ extraClasses, text, headerStyles, inner }) => {
     return (
         <div className={`w-full p-8 pt-16 ${extraClasses}`}>
             <Header
-                size={`${headerStyles} relative z-10 mb-32 text-center mt-2`}
+                size={`${headerStyles} relative z-10 text-center mt-2`}
                 text={text}
             />
             {inner}

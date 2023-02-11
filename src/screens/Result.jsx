@@ -14,6 +14,7 @@ import arc2 from '../assets/images/arc-yellow.svg'
 import arc3 from '../assets/images/arc-red.svg'
 import arc4 from '../assets/images/arc-blue.svg'
 import ArrDown from '../assets/images/arrow-d.png'
+import API from "../utils/API";
 
 
 const images = {
@@ -25,8 +26,11 @@ const images = {
 
 
 
-const Result = ({ setPage, reciever }) => {
-    if (!reciever) { reciever = 'family' }
+const Result = ({ setPage, reciever, vk_id, matter, setLoading }) => {
+    const [imgGen, generateImg] = useState(null)
+
+
+
     const send = () => {
         document.getElementsByClassName('vk-share')[0].append(window.VK.Share.button({
             url: 'https://localhost:3000',
@@ -38,7 +42,7 @@ const Result = ({ setPage, reciever }) => {
         window.VK.Share.click(0, this);
 
     }
-    const share = () => {
+    const shareOnTheWall = () => {
         bridge.send('VKWebAppShare', {
             link: 'https://vk.com/vkappsdev'
         })
@@ -53,6 +57,23 @@ const Result = ({ setPage, reciever }) => {
             });
 
     }
+
+    const prepareImage = (place) => {
+        setLoading('Ура! Мы готовим<br/>поздравление к отправке 😊')
+        API.post('/generate', {
+            vk_id: vk_id,
+            person: reciever,
+            category: matter
+        })
+            .then(
+                response => {
+                    if (response.data.success) {
+                        generateImg(response.data.image_url);
+                    }
+                }
+            )
+    }
+
     const colors = [
         { col: "green", arc: arc1 },
         { col: "yellow", arc: arc2 },
@@ -82,11 +103,11 @@ const Result = ({ setPage, reciever }) => {
                     <p className="mt-4 text-white moris ">
                         Вы заработали <span className="text-yellow">10 баллов </span><br />
                         и можете увеличить<br /> свои баллы.
-                        
+
                     </p>
                     <div className="absolute arrow-d left-6 mx-auto bottom-8 w-fit sm:block hidden">
-                            <img src={ArrDown} />
-                        </div>
+                        <img src={ArrDown} />
+                    </div>
                 </div>
                 <div className="min-[766px]:w-72 final-pic">
                     <div className="bg-white border-4 with-logo border-white rounded-lg overflow-hidden w-full text-center ">
@@ -137,8 +158,8 @@ const Result = ({ setPage, reciever }) => {
                 <div className="rounded-lg text-center p-4 flex flex-col justify-between text-blue bg-white">
                     <Header text="Поделитесь<br/>карточкой" size={'text-xl'} />
                     <p className="text-reg text-sm -mt-3"> Поделитесь карточкой в личных сообщениях или сделайте репост, чтобы увеличить баллы  </p>
-                    <Button onClick={() => { send() }} classes="bg-yellow rounded-full p-3 w-full text-center font-bold text-sm mt-4" text="Поделиться в ЛС | +10" />
-                    <Button onClick={() => { share() }} classes="bg-yellow rounded-full p-3 w-full text-center font-bold text-sm mt-2" text="Сделать репост | +10" />
+                    <Button onClick={() => { prepareImage("message") }} classes="bg-yellow rounded-full p-3 w-full text-center font-bold text-sm mt-4" text="Поделиться в ЛС | +10" />
+                    <Button onClick={() => { prepareImage("wall") }} classes="bg-yellow rounded-full p-3 w-full text-center font-bold text-sm mt-2" text="Сделать репост | +10" />
                 </div>
                 <div className="rounded-lg text-center p-4 flex flex-col justify-between text-blue bg-lightGreen">
                     <Header text="Прояви заботу" size={'text-xl'} />

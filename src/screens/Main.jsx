@@ -51,7 +51,7 @@ const Main = ({ setPage }) => {
                 popup ?
                     <Popup
                         onClick={() => showPopup(false)}
-                        inner={<PopupInner />} />
+                        inner={<PopupInner setPage={setPage} />} />
                     : null
             }
         </main>

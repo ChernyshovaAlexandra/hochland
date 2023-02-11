@@ -2,14 +2,14 @@ import React from "react";
 
 
 const Button = ({
-    onClick, text, classes
+    onClick, text, classes, type
 }) => {
     return (
         <button
             onClick={onClick}
-            type="button"
+            type={type ? type : "button"}
             className={
-                classes ? classes : "bg-yellow px-4 py-3 rounded-xl text-blue font-bold"
+                `button-st ${classes ? classes : "bg-yellow px-4 py-3 rounded-xl text-blue font-bold"}`
             }>
             <p className="relative"
                 dangerouslySetInnerHTML={{ __html: text }}

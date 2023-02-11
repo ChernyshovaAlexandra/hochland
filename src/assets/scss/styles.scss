@@ -250,49 +250,9 @@ h1 {
         color: $green;
     }
 }
-.btn {
-    position: relative;
-    &::before,
-    &::after {
-        content: "";
-        display: block;
-        position: absolute;
-        left: -5%;
-        top: -5%;
-        margin: auto;
-        width: 110%;
-        height: 110%;
-        background: url(../images/btn-bg-yellow.png) no-repeat center;
-        background-size: contain;
-        z-index: 1;
-        touch-action: none;
-    }
-
-    &::after {
-        opacity: 0;
-        background: url(../images/btn-bg-yellow-hover.png) no-repeat center;
-        background-size: contain;
-        transition: all 0.3s;
-        z-index: 2;
-    }
-    &-transparent {
-        &::before {
-            background: url(../images/btn-bg-transparent.png) no-repeat center;
-            background-size: contain;
-        }
-        &::after {
-            background: url(../images/btn-bg-transparent-hover.png) no-repeat center;
-            background-size: contain;
-        }
-    }
-    &:hover {
-        &::after {
-            opacity: 1;
-            transition: all 0.3s;
-        }
-    }
-    p {
-        z-index: 3;
+.button-st{
+    &:hover{
+        filter: brightness(1.2);
     }
 }
 .popup {
@@ -353,7 +313,7 @@ h1 {
     }
 }
 .pic-bg {
-    background: url(../images/pic-bg.jpg) no-repeat center;
+    background: url(../images/pic-bg.jpeg) no-repeat center;
     background-size: cover;
 }
 .with-logo {

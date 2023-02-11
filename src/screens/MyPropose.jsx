@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "../components/Button";
 import Header from "../components/Header";
+import API from "../utils/API";
 import { steps } from "./CardGeneration";
 
 
-const MyPropose = () => {
-    const propose = () => {
-
+const MyPropose = ({ vk_id }) => {
+    const [text, setText] = useState('');
+    const [person, setPerson] = useState('');
+    const propose = (e) => {
+        e.preventDefault();
+        console.log(text, "person: ", person)
+        // if (text) {
+        //     API.post('/form', {
+        //         vk_id: { vk_id },
+        //         text: text,
+        //         person: person,
+        //         category: ''
+        //     })
+        // }
     }
     return (
         <main className="blue-bg p-6 main grid place-items-center text-blue pt-20">
@@ -15,17 +27,16 @@ const MyPropose = () => {
                     size={'min-[766px]:text-3xl text-xl text-blue text-center min-[766px]:mb-12 mb-8'}
                     text='Предложите свой вариант карточки заботы и участвуйте в розыгрыше' />
 
-                <form action="" className=" text-reg min-[766px]:w-10/12 mx-auto">
+                <form className=" text-reg min-[766px]:w-10/12 mx-auto" onSubmit={(e) => { propose(e) }}>
                     <div>
                         <label htmlFor="" className="mb-3 font-bold block">
                             О ком позаботиться?
                         </label>
 
-                        <select name="" id="" className="rounded-lg mb-8">
+                        <select name="person" id="" className="rounded-lg mb-8" onChange={e=>setPerson(e.target.value)}>
                             {
                                 steps[0].btns.map((opt, id) => (
-                                    <option value={opt.prop}
-                                    >
+                                    <option key={id} value={opt.prop} >
                                         {opt.name}
                                     </option>
                                 ))
@@ -37,9 +48,17 @@ const MyPropose = () => {
                             Лучший подарок - это забота,
                             а забота с Hochland - это…
                         </label>
-                        <textarea className="w-full rounded-lg" name="" id="" cols="30" rows="10"></textarea>
+                        <textarea className="w-full rounded-lg"
+                            name="text"
+                            id="text"
+                            cols="30"
+                            rows="10"
+                            onChange={e=>setText(e.target.value)}
+                            maxLength={100} required>{text}</textarea>
                     </div>
-                    <Button onClick={() => { propose() }} classes="bg-yellow rounded-full py-3 px-6 mx-auto block w-fit text-center font-bold text-sm mt-4" text="Отправить" />
+                    <Button
+                        type={'submit'}
+                        classes="bg-yellow rounded-full py-3 px-6 mx-auto block w-fit text-center font-bold text-sm mt-4" text="Отправить" />
                 </form>
             </div>
 

@@ -4,9 +4,10 @@ import img2 from '../assets/images/rule2.png'
 import img3 from '../assets/images/rule3.png'
 import img4 from '../assets/images/yandex.png'
 import img5 from '../assets/images/ozon.png'
+import Button from "./Button";
 
 
-const PopupInner = () => {
+const PopupInner = ({setPage}) => {
     return (
         <div>
             <h2 class="text-3xl text-center text-blue">Правила</h2>
@@ -48,8 +49,15 @@ const PopupInner = () => {
                                 </div>
                             </div>
                         </div>
+
                     </div>
+
                 </div>
+                <Button
+                onClick={()=>setPage('cardgen')}
+                    classes="block mt-6 mx-auto w-fit bg-yellow px-6 py-3 rounded-2xl text-blue font-bold"
+                    text={'Вперед'}
+                />
             </div>
         </div>
     )

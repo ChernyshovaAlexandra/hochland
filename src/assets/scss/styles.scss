@@ -1,0 +1,381 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap");
+@font-face {
+    font-family: "MorrisModernC";
+    src: url("../fonts/MorrisModernC.otf") format("opentype");
+}
+$yellow: rgba(255, 214, 0, 1);
+$blue: #0a1f8e;
+$lightBlue: #ebf7fd;
+$lightGreen: rgba(228, 255, 178, 1);
+$green: #006930;
+$orange: #ff6b00;
+$red: #e60004;
+
+.content-main {
+    margin: auto;
+    max-width: 780px;
+    width: 100%;
+    overflow-x: hidden;
+    
+    .main {
+        height: 100%;
+        min-height: 100vh;
+        input,
+        select,
+        textarea {
+            -webkit-appearance: none;
+            box-shadow: none;
+            outline: none;
+            border: none;
+            background: #fff;
+            border: 1px solid #2ebef0;
+            padding: 1rem;
+        }
+        select {
+            cursor: pointer;
+            padding-right: 40px;
+            background: #fff url(../images/select-down.png) no-repeat;
+            background-position: 95% 50%;
+            background-size: 15px;
+        }
+        @media screen and (min-width: 760px) {
+            height: 780px;
+            min-height: 0;
+        }
+    }
+    @media screen and (min-width: 760px) {
+        height: 780px;
+    }
+}
+.final-pic {
+    @media screen and (max-width: 760px) {
+        flex: 80%;
+        max-width: 79%;
+    }
+}
+.main {
+    @media screen and (max-width: 760px) {
+        height: 100vh;
+    }
+}
+.lightblue-bg {
+    background: $lightBlue;
+}
+.lightgreen-bg {
+    background: $lightGreen;
+}
+.block-style {
+    border: 3px solid transparent;
+
+    &:hover {
+        background: rgba(9, 41, 192, 1);
+        border: 3px solid #fff;
+        p {
+            color: white;
+        }
+    }
+}
+.blue-bg {
+    background: radial-gradient(59.82% 43.83% at 50% 50%, #5750ab 0%, #00188a 100%);
+    &.round {
+        position: relative;
+        &::before {
+            content: "";
+            position: absolute;
+            left: -10%;
+            top: 6%;
+            bottom: 0;
+            background: #0a1f8e url(../images/after-blue-baloons.png) no-repeat bottom;
+            background-size: 75%;
+            border-radius: 50% 50% 0 0;
+            width: 120%;
+            height: 94%;
+            @media screen and (max-width: 748px) {
+                width: 160%;
+                left: -30%;
+            }
+        }
+        &::after {
+            position: absolute;
+            // content: "";
+            left: 0;
+            right: 0;
+            margin: auto;
+            bottom: 0;
+            background: url(../images/after-blue-baloons.png) no-repeat center;
+            background-size: contain;
+            width: 80%;
+            height: 80%;
+        }
+    }
+}
+.red-bg {
+    background: radial-gradient(59.82% 43.83% at 50% 50%, #ff9d9f 0%, #e60004 100%);
+}
+.arr {
+    &:hover {
+        background: #ebf7fd;
+    }
+}
+.bg {
+    &-lightGreen {
+        background: #d7fb94;
+    }
+    &-red {
+        background: $red;
+        &.active {
+            position: relative;
+            &::before {
+                content: "";
+                position: absolute;
+                width: calc(100% + 10px);
+                height: calc(100% + 10px);
+                left: -5px;
+                top: -5px;
+                border: 3px solid $red;
+                border-radius: 50%;
+            }
+        }
+        &-res {
+            background: #b20003;
+        }
+    }
+    &-blue {
+        background: $blue;
+    }
+    &-orange {
+        background: $orange;
+    }
+    &-yellow {
+        background: $yellow;
+        &.active {
+            position: relative;
+            &::before {
+                content: "";
+                position: absolute;
+                width: calc(100% + 10px);
+                height: calc(100% + 10px);
+                left: -5px;
+                top: -5px;
+                border: 3px solid $yellow;
+                border-radius: 50%;
+            }
+        }
+        &-res {
+            background: #ff6b00;
+        }
+    }
+    &-darkBlue {
+        background: #1f326b;
+    }
+    &-lightBlue {
+        background: #ebf7fd;
+    }
+    &-green {
+        background: #7db713;
+        &-res {
+            background: #006930;
+        }
+        &.active {
+            position: relative;
+            &::before {
+                content: "";
+                position: absolute;
+                width: calc(100% + 10px);
+                height: calc(100% + 10px);
+                left: -5px;
+                top: -5px;
+                border: 3px solid #7db713;
+                border-radius: 50%;
+            }
+        }
+    }
+    &-blueL {
+        background: #2ebef0;
+        &.active {
+            position: relative;
+            &::before {
+                content: "";
+                position: absolute;
+                width: calc(100% + 10px);
+                height: calc(100% + 10px);
+                left: -5px;
+                top: -5px;
+                border: 3px solid #2ebef0;
+                border-radius: 50%;
+            }
+        }
+        &-res {
+            background: #0e98c8;
+        }
+    }
+}
+.h {
+    &-100vh {
+        height: 100vh;
+    }
+}
+h1 {
+    font-family: "MorrisModernC";
+}
+.moris {
+    font-family: "MorrisModernC";
+}
+.text {
+    &-orange {
+        color: $orange;
+    }
+    &-yellow {
+        color: $yellow;
+    }
+    &-blue {
+        color: $blue;
+    }
+    &-red {
+        color: red;
+    }
+    &-reg {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 500;
+        line-height: 1.3;
+    }
+    &-green {
+        color: $green;
+    }
+}
+.btn {
+    position: relative;
+    &::before,
+    &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        left: -5%;
+        top: -5%;
+        margin: auto;
+        width: 110%;
+        height: 110%;
+        background: url(../images/btn-bg-yellow.png) no-repeat center;
+        background-size: contain;
+        z-index: 1;
+        touch-action: none;
+    }
+
+    &::after {
+        opacity: 0;
+        background: url(../images/btn-bg-yellow-hover.png) no-repeat center;
+        background-size: contain;
+        transition: all 0.3s;
+        z-index: 2;
+    }
+    &-transparent {
+        &::before {
+            background: url(../images/btn-bg-transparent.png) no-repeat center;
+            background-size: contain;
+        }
+        &::after {
+            background: url(../images/btn-bg-transparent-hover.png) no-repeat center;
+            background-size: contain;
+        }
+    }
+    &:hover {
+        &::after {
+            opacity: 1;
+            transition: all 0.3s;
+        }
+    }
+    p {
+        z-index: 3;
+    }
+}
+.popup {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(4px);
+    display: grid;
+    place-items: center;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    width: 100%;
+    @media screen and (min-width: 600px) {
+        max-height: 100vh;
+    }
+    top: 0;
+    left: 0;
+    z-index: 100;
+    &-inner {
+        width: 100vw;
+        @media screen and (min-width: 600px) {
+            width: calc(100vw - 4rem);
+            max-height: calc(100vh - 4rem);
+        }
+        max-width: 700px;
+        margin: auto;
+
+        background: white;
+        border: 3px solid $blue;
+    }
+    p {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 600;
+        font-size: 1rem;
+    }
+    h3,
+    h2 {
+        font-family: "MorrisModernC";
+        font-style: normal;
+        font-weight: 400;
+    }
+}
+.close-btn {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    span {
+        width: 14px;
+        height: 3px;
+        display: block;
+        background: $blue;
+        transform-origin: 35%;
+        transform: rotate(45deg);
+        &:last-child {
+            transform: rotate(-45deg);
+        }
+    }
+}
+.pic-bg {
+    background: url(../images/pic-bg.jpg) no-repeat center;
+    background-size: cover;
+}
+.with-logo {
+    position: relative;
+    &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        margin: auto;
+        width: 4rem;
+        height: 3rem;
+        background: url(../images/main-logo.png) no-repeat center;
+        background-size: contain;
+        z-index: 30;
+    }
+}
+.mainPic {
+    @media screen and (max-width: 375px) {
+        width: 40%;
+    }
+}
+
+@import "./animations";

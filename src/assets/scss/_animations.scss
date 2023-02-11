@@ -1,0 +1,45 @@
+@keyframes baloon {
+    from {
+        transform: translate(0);
+    }
+    to {
+        transform: translate(0, 100px);
+    }
+}
+@keyframes heart2 {
+    0% {
+        transform: translate(0) scale(1);
+        opacity: 1;
+        transform-origin: center;
+    }
+    35%,100% {
+        transform: scale(0.5) translate(-80px, -440px);
+        opacity: 0;
+        transform-origin: center;
+    }
+}
+@keyframes heart1 {
+    0% {
+        transform: translate(-60px, 120px) scale(1);
+        opacity: 1;
+        transform-origin: center;
+    }
+    35%, 100% {
+        transform: scale(0.5) translate(280px, -280px);
+        opacity: 0;
+        transform-origin: center;
+    }
+}
+.heart-2 {
+    // opacity: 0;
+    animation: 4.5s heart2 5s linear infinite;
+}
+.heart-1 {
+    animation: 4s heart1 3s linear infinite;
+}
+.baloon {
+    &-1 {
+        animation: 6s baloon 1s linear alternate infinite;
+    }
+    animation: 5s baloon 2s linear alternate infinite;
+}

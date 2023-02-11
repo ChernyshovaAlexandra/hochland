@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.e91541d2.css",
-    "main.js": "/static/js/main.c77745c0.js",
+    "main.js": "/static/js/main.d3fd2953.js",
     "static/js/787.1bc118ff.chunk.js": "/static/js/787.1bc118ff.chunk.js",
     "static/media/logo_hochland.png": "/static/media/logo_hochland.c919944895b00566c305.png",
     "static/media/pic-bg.jpeg": "/static/media/pic-bg.3555f55ed2c534bf4a6d.jpeg",
@@ -18,11 +18,11 @@
     "static/media/arrT.svg": "/static/media/arrT.d6f52f5e08581eaf6e1cf3e43d96518c.svg",
     "static/media/arrB.svg": "/static/media/arrB.c7b04d9add51fe975ac50fb51b0b860f.svg",
     "main.e91541d2.css.map": "/static/css/main.e91541d2.css.map",
-    "main.c77745c0.js.map": "/static/js/main.c77745c0.js.map",
+    "main.d3fd2953.js.map": "/static/js/main.d3fd2953.js.map",
     "787.1bc118ff.chunk.js.map": "/static/js/787.1bc118ff.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e91541d2.css",
-    "static/js/main.c77745c0.js"
+    "static/js/main.d3fd2953.js"
   ]
 }

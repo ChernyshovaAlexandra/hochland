@@ -2,64 +2,75 @@ import React from "react";
 import img1 from '../assets/images/rule1.png'
 import img2 from '../assets/images/rule2.png'
 import img3 from '../assets/images/rule3.png'
-import img4 from '../assets/images/yandex.png'
+import img4 from '../assets/images/yandex-mini.png'
 import img5 from '../assets/images/ozon.png'
+import img6 from '../assets/images/toster.png'
 import Button from "./Button";
+import Header from "./Header";
 
 
-const PopupInner = ({setPage}) => {
+const PopupInner = ({ setPage }) => {
     return (
-        <div>
-            <h2 class="text-3xl text-center text-blue">Правила</h2>
-            <div className="content mt-4 overflow-auto">
-                <div className="grid sm:grid-cols-3 gap-2 ">
-                    <div className="lightblue-bg p-4">
-                        <img className="w-16 h-16 sm:w-24 sm:h-24 object-contain" src={img1} alt="" />
-                        <p className="mt-4 text-blue">
-                            Выбирайте о ком и в какой сфере хотели бы поделиться
-                        </p>
-                    </div>
-                    <div className="lightblue-bg p-4">
-                        <img className="w-16 h-16 sm:w-24 sm:h-24 object-contain" src={img2} alt="" />
-                        <p className="mt-4 text-blue">Генерируйте карточку заботы</p>
-                    </div>
-                    <div className="lightblue-bg p-4">
-                        <img className="w-16 h-16 sm:w-24 sm:h-24 object-contain" src={img3} alt="" />
-                        <p className="mt-4 text-blue">Делитесь карточками, выполняйте задания и участвуйте в розыгрыше ценных призов от Hochland!</p>
+        <>
+            <div className="min-[766px]:flex gap-4 h-fit">
+                <div className="min-[766px]:w-5/12 w-full h-full">
+                    <Header text="Правила" size="text-white text-center text-2xl" />
+                    <div className="grid gap-4 h-full -mt-2" style={{ 'gridTemplateRows': '30% 30% 38%' }}>
+                        <div className="p-4 rounded-lg bg-lightBlue text-blue font-bold">
+                            <img className="w-16 h-16 object-contain mb-4" src={img1} alt="" />
+                            <p>1. Выбирайте о ком и в какой сфере хотели бы поделиться
+                            </p>
+                        </div>
+                        <div className="p-4 rounded-lg bg-lightBlue text-blue font-bold">
+                            <img className="w-16 h-16 object-contain mb-4" src={img2} alt="" />
+                            <p>2. Генерируйте карточку заботы</p>
+                        </div>
+                        <div className="p-4 rounded-lg bg-lightBlue text-blue font-bold">
+                            <img className="w-16 h-16 object-contain mb-4" src={img3} alt="" />
+                            <p>3. Делитесь карточками, выполняйте задания и участвуйте в розыгрыше ценных призов от Hochland!</p>
+                        </div>
                     </div>
                 </div>
-                <div className="mt-4 lightgreen-bg p-4">
-                    <h3 className="text-2xl text-green">Еженедельные подарки</h3>
-                    <div className="mt-4 grid sm:grid-cols-2 gap-4">
-                        <div>
-                            <p className="text-green">Если вы набрали 150 баллов и более:</p>
-                            <div className="w-full bg-white p-4 mt-4">
-                                <div className="flex gap-2">
-                                    <img className="w-11 h-11 object-contain" src={img4} alt="" />
-                                    <p className="text-blue">30 подписок Яндекс Плюс</p>
-                                </div>
+                <div className="min-[766px]:w-7/12 mt-8 min-[766px]:mt-0">
+                    <Header text="Призы" size="text-white text-center text-2xl" />
+                    <div className="bg-blueZ -mt-2 p-4 rounded-lg text-blue">
+                        <Header text="Еженедельные подарки" size="text-blue text-lg" />
+                        <p className="block -mt-2">Если вы набрали от 50 баллов:</p>
+                        <div className="my-2 rounded-lg bg-white p-3">
+                            <div className="flex gap-4 font-bold">
+                                <img src={img5} alt="" srcset="" />
+                                <p>50 сертификатов OZON номиналом <span className="text-red">500 рублей</span></p>
                             </div>
                         </div>
-                        <div>
-                            <p className="text-green">Если вы набрали 500 баллов и более:</p>
-                            <div className="w-full bg-white p-4 mt-4">
-                                <div className="flex gap-2">
-                                    <img className="w-11 h-11 object-contain" src={img5} alt="" />
-                                    <p className="text-blue">10 сертификатов OZON номиналом <span className="text-red">3000 рублей</span></p>
-                                </div>
+                        <p>Если вы набрали от 100 баллов:</p>
+                        <div className="my-2 rounded-lg bg-white p-3">
+                            <div className="flex gap-4 font-bold">
+                                <img src={img6} alt="" srcset="" />
+                                <p>3 тостера в неделю</p>
                             </div>
                         </div>
-
+                        <hr className="my-4 border-black" />
+                        <Header text="Главные призы" size="text-blue text-lg" />
+                        <p  className="block -mt-2">Если вы набрали от 100 баллов:</p>
+                        <div className="my-2 rounded-lg bg-white p-3">
+                            <div className="flex gap-4 font-bold">
+                                <img src={img5} alt="" srcset="" />
+                                <p>50 сертификатов OZON номиналом <span className="text-red">1000 рублей</span></p>
+                            </div>
+                        </div>
+                        <p>Среди 30% пользователей с наибольшим количество баллов:</p>
+                        <div className="my-2 rounded-lg bg-white p-3">
+                            <div className="flex gap-4 font-bold">
+                                <img src={img4} alt="" srcset="" />
+                                <p>5 Яндекс станций мини</p>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
-                <Button
-                onClick={()=>setPage('cardgen')}
-                    classes="block mt-6 mx-auto w-fit bg-yellow px-6 py-3 rounded-2xl text-blue font-bold"
-                    text={'Вперед'}
-                />
+
             </div>
-        </div>
+            <Button text={'Вперед'} classes="bg-yellow rounded-full py-3 px-12 mx-auto block w-fit text-center font-bold text-sm mt-4" onClick={() => setPage('cardgen')} />
+        </>
     )
 }
 

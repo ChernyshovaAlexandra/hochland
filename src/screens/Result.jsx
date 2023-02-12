@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../components/Button";
 import Header from "../components/Header";
 import bridge from '@vkontakte/vk-bridge';
@@ -15,6 +15,7 @@ import arc3 from '../assets/images/arc-red.svg'
 import arc4 from '../assets/images/arc-blue.svg'
 import ArrDown from '../assets/images/arrow-d.png'
 import API from "../utils/API";
+import Loader from "../components/Loader";
 
 
 const images = {
@@ -26,29 +27,109 @@ const images = {
 
 
 
-const Result = ({ setPage, reciever, vk_id, matter, setLoading }) => {
-    const [imgGen, generateImg] = useState(null)
-
-
-
+const Result = ({ setPage, reciever, vk_id, matter, setLoading, showMessage, showMessageAdditional,setPoints }) => {
+    const [message, setMessage] = useState('...это порадовать родителей после работы домашними бургерами с плавленым сыром Hochland')
+    let mobile = window.innerWidth < 740
+    useEffect(() => {
+        setLoading(false)
+    }, [])
     const send = () => {
-        document.getElementsByClassName('vk-share')[0].append(window.VK.Share.button({
-            url: 'https://localhost:3000',
-            title: "Моя забота о тебе",
-            image: 'https://bali.top/storage/images/Post/100/img-0766.jpeg',
-            noparse: true
+        if (mobile) {
+            bridge.send('VKWebAppShare', {
+                link: 'https://vk.com/vkappsdev'
+            })
+                .then((data) => {
+                    setLoading('Спасибо за активность! Проверяем задание');
 
-        }))
-        window.VK.Share.click(0, this);
+                    if (data.result) {
+                        setLoading(false)
+                        console.log(data.result);
+                        API.post('/share/private', vk_id)
+                            .then(res => {
+                                if (res.data.success) {
+                                    showMessage('Начисляем баллы');
+                                }
+                                else {
+                                    showMessage('Что-то пошло не так');
+                                    showMessageAdditional('Возможно, это ошибка сервера. Мы уже работаем над этим')
+                                }
+                            })
+                            .catch(err => {
+                                showMessage('Что-то пошло не так');
+                                showMessageAdditional('Возможно, это ошибка сервера. Мы уже работаем над этим')
+                            })
+                    }
+                })
+                .catch((error) => {
+                    showMessage('Что-то пошло не так');
+                    showMessageAdditional('Возможно, это ошибка сервера. Мы уже работаем над этим')
+                    console.log(error);
+                });
+        } else {
+            document.getElementsByClassName('vk-share')[0].append(
+                window.VK.Share.button({
+                    url: 'https://localhost:3000',
+                    title: "Моя забота о тебе",
+                    image: 'https://bali.top/storage/images/Post/100/img-0766.jpeg',
+                    noparse: true
+                }, {
+                    custom: () => { console.log(123) }
+                }))
+            window.VK.Share.click(0, this)
+            setTimeout(() => {
+                API.post('/share/private', vk_id)
+                    .then(res => {
+                        if (res.data.success) {
+                            showMessage('Начисляем баллы');
+                            setPoints(res.data.points)
+                        }
+                        else {
+                            showMessage('Что-то пошло не так');
+                            showMessageAdditional('Нам не удолось проверить отправку сообщения. Возможно, это ошибка сервера. Мы уже работаем над этим')
+                        }
+                    })
+                    .catch(err => {
+                        showMessage('Что-то пошло не так');
+                        showMessageAdditional('Нам не удолось проверить отправку сообщения. Возможно, это ошибка сервера. Мы уже работаем над этим')
+                    })
+            }, 17000)
+
+        }
 
     }
     const shareOnTheWall = () => {
-        bridge.send('VKWebAppShare', {
-            link: 'https://vk.com/vkappsdev'
-        })
+        const process = mobile ? 'VKWebAppShowWallPostBox' : 'VKWebAppShare';
+        let attachments = mobile ? {
+            message: 'Hello!',
+            attachments: 'https://habr.com'
+        } : { link: 'https://vk.com/vkappsdev' };
+
+
+        bridge.send(process, attachments)
             .then((data) => {
-                if (data.result) {
-                    // Запись размещена
+                setLoading('Спасибо за активность! Проверяем репост');
+                let checkObj = mobile ? data.post_id : data.result
+                if (checkObj) {
+                    setLoading(false)
+                    API.post('/share/public', vk_id)
+                        .then(response => {
+                            if (response.data.success) {
+                                showMessage('Начисляем баллы')
+                            }
+                            else {
+                                showMessage('Что-то пошло не так');
+                                showMessageAdditional('Возможно, это ошибка сервера. Мы уже работаем над этим')
+                            }
+                        })
+                        .catch(error => {
+                            console.log(error)
+                            showMessage('Что-то пошло не так');
+                            showMessageAdditional('Возможно, это ошибка сервера. Мы уже работаем над этим')
+                        })
+                }
+                else {
+                    showMessage('Что-то пошло не так');
+                    showMessageAdditional('Возможно, это ошибка сервера. Мы уже работаем над этим')
                 }
             })
             .catch((error) => {
@@ -58,21 +139,7 @@ const Result = ({ setPage, reciever, vk_id, matter, setLoading }) => {
 
     }
 
-    const prepareImage = (place) => {
-        setLoading('Ура! Мы готовим<br/>поздравление к отправке 😊')
-        API.post('/generate', {
-            vk_id: vk_id,
-            person: reciever,
-            category: matter
-        })
-            .then(
-                response => {
-                    if (response.data.success) {
-                        generateImg(response.data.image_url);
-                    }
-                }
-            )
-    }
+
 
     const colors = [
         { col: "green", arc: arc1 },
@@ -110,7 +177,7 @@ const Result = ({ setPage, reciever, vk_id, matter, setLoading }) => {
                     </div>
                 </div>
                 <div className="min-[766px]:w-72 final-pic">
-                    <div className="bg-white border-4 with-logo border-white rounded-lg overflow-hidden w-full text-center ">
+                    <div className="bg-white border-4 with-logo border-white rounded-lg overflow-hidden w-full text-center relative">
                         <div className={`image-frame bg-${color}-res relative w-full h-64 -mt-6`}>
                             <img src={bg} className='absolute mx-auto bottom-0 w-11/12 left-0 right-0 ' alt="" />
                             <img src={images[reciever]} alt="" className="absolute mx-auto bottom-0 w-10/12 left-0 right-0" />
@@ -124,11 +191,10 @@ const Result = ({ setPage, reciever, vk_id, matter, setLoading }) => {
                                     а забота с Хохланд это…<br />
                                 </span>
                                 <div className="font-bold mt-2 text-xs">
-                                    ...это порадовать родителей после работы
-                                    домашними бургерами с плавленым
-                                    сыром Hochland</div>
+                                    {message}</div>
                             </span>
                         </div>
+                        {/* <Loader loading={''} /> */}
                     </div>
                 </div>
                 <div className="min-[766px]:w-16 self-center">
@@ -155,19 +221,25 @@ const Result = ({ setPage, reciever, vk_id, matter, setLoading }) => {
 
 
             <div className="grid min-[766px]:grid-cols-3 min-[766px]:gap-2 gap-4 min-[766px]:mt-4 mt-8">
-                <div className="rounded-lg text-center p-4 flex flex-col justify-between text-blue bg-white">
+                <div className="rounded-lg text-center p-4 flex flex-col justify-between text-blue bg-white hover:scale-105 transition ease-in-out duration-300 cursor-pointer">
                     <Header text="Поделитесь<br/>карточкой" size={'text-xl'} />
                     <p className="text-reg text-sm -mt-3"> Поделитесь карточкой в личных сообщениях или сделайте репост, чтобы увеличить баллы  </p>
-                    <Button onClick={() => { prepareImage("message") }} classes="bg-yellow rounded-full p-3 w-full text-center font-bold text-sm mt-4" text="Поделиться в ЛС | +10" />
-                    <Button onClick={() => { prepareImage("wall") }} classes="bg-yellow rounded-full p-3 w-full text-center font-bold text-sm mt-2" text="Сделать репост | +10" />
+                    <Button onClick={() => {
+                        send()
+                        // prepareImage("message")
+                    }} classes="bg-yellow rounded-full p-3 w-full text-center font-bold text-sm mt-4" text="Поделиться в ЛС | +10" />
+                    <Button onClick={() => {
+                        shareOnTheWall()
+                        //prepareImage("wall")
+                    }} classes="bg-yellow rounded-full p-3 w-full text-center font-bold text-sm mt-2" text="Сделать репост | +10" />
                 </div>
-                <div className="rounded-lg text-center p-4 flex flex-col justify-between text-blue bg-lightGreen">
+                <div className="rounded-lg text-center p-4 flex flex-col justify-between text-blue bg-lightGreen hover:scale-105 transition ease-in-out duration-300 cursor-pointer">
                     <Header text="Прояви заботу" size={'text-xl'} />
                     <p className="text-reg text-sm -mt-3">Выполните задание на карточке, опубликуйте фото с хэштегом #сЫрдечнопоздравляю
                         и получите 100 баллов</p>
                     <Button onClick={() => { setPage('task') }} classes="bg-blue text-white rounded-full p-3 w-full text-center font-bold text-sm mt-4" text="Участвовать | +100" />
                 </div>
-                <div className="rounded-lg text-center p-4 flex flex-col justify-between text-blue bg-white">
+                <div className="rounded-lg text-center p-4 flex flex-col justify-between text-blue bg-white hover:scale-105 transition ease-in-out duration-300 cursor-pointer">
                     <Header text="Предложите свой<br/>вариант карточки" size={'text-xl'} />
                     <p className="text-reg text-sm -mt-3">Напишите свой текст поздравления и заработайте 150 баллов</p>
                     <Button onClick={() => { setPage('propose') }} classes="bg-yellow rounded-full p-3 w-full text-center font-bold text-sm mt-4" text="Предложить | +30" />

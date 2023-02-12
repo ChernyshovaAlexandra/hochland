@@ -1,49 +1,82 @@
 import React, { useState } from "react";
 import Block from "../components/Block";
 import GenerationContainer from "../components/GenerationContainer";
-import card1 from '../assets/images/card1.png'
-import card2 from '../assets/images/card2.png'
-import card3 from '../assets/images/card3.png'
-import card4 from '../assets/images/card4.png'
-import card5 from '../assets/images/card5.png'
-import card6 from '../assets/images/card6.png'
-import card7 from '../assets/images/card7.png'
-import card8 from '../assets/images/card8.png'
+
+import { steps } from "../constants/steps";
+import {
+    useTransition,
+    useSpring,
+    useChain,
+    config,
+    animated,
+    useSpringRef,
+} from '@react-spring/web'
 
 
-export const steps = [
-    {
-        id: 1,
-        header: '<span class="text-white text-center">О ком хотите<br/>позаботиться?</span>',
-        extraClasses: 'blue-bg round overflow-hidden main',
-        btns: [
-            { name: 'О родственнике', img: card1, prop: 'family' },
-            { name: 'О коллеге', img: card2, prop: "collegue" },
-            { name: 'О любимом человеке', img: card3, prop: 'lover' },
-            { name: 'О друге/подруге', img: card4, prop: 'friends' }
-
-        ]
-    },
-    {
-        id: 2,
-        header: '<span class="text-white text-center">В каком направлении вы бы<br class="hidden sm:block" />"хотели проявить заботу?</span>',
-        extraClasses: 'blue-bg round overflow-hidden main',
-        // classes: 'bg-blue border-4 border-white w-40 sm:w-60',
-        btns: [
-            { name: 'Путешествия', img: card5, category: 'trip' },
-            { name: 'Развлечения', img: card6, category: 'advertisement' },
-            { name: 'Спорт', img: card7, category: 'sport' },
-            { name: 'Хобби', img: card8, category: 'hobby' }
-        ]
-    }
-]
 
 
-const CardGeneration = ({ setPage, setReciever, setMatter }) => {
+const CardGeneration = ({ setPage, setReciever, setMatter, prepareImage }) => {
     const [step, setStep] = useState(0);
+    const [open, set] = useState(true);
+    const [second, setSec] = useState(false);
+    const springApi = useSpringRef();
+
+    const { size, ...rest } = useSpring({
+        ref: springApi,
+        config: config.stiff,
+        from: { transform: 'scale(.2)' },
+        to: {
+            transform: open ? 'scale(1)' : 'scale(.2)'
+        },
+    })
+    const transApi = useSpringRef()
+    let transition = useTransition(open ? steps[0].btns : [], {
+        ref: transApi,
+        trail: 400 / steps[0].btns.length,
+        from: { opacity: 0, scale: 0 },
+        enter: { opacity: 1, scale: 1 },
+        leave: { opacity: 0, scale: 0 },
+    });
+
+    let transition2 = useTransition(second ? steps[1].btns : [], {
+        ref: transApi,
+        trail: 400 / steps[1].btns.length,
+        from: { opacity: 0, scale: 0 },
+        enter: { opacity: 1, scale: 1 },
+        leave: { opacity: 0, scale: 0 },
+    });
+
+    useChain(open ? [springApi, transApi] : [transApi, springApi], [
+        0,
+        open ? 0.1 : 0.6,
+    ])
+
+    const setNext = (item) => {
+        if (step === 0) {
+            set(false)
+            setTimeout(() => {
+                setSec(true);
+                setCardProps(item.prop);
+
+            }, 800)
+        }
+        else {
+            setCardProps(item.prop);
+            setTimeout(() => {
+                prepareImage(item.prop);
+                setPage('result')
+            }, 800);
+        }
+    }
+
+
 
     const setCardProps = (props) => {
-        if (step === 0) { setStep(1); setReciever(props) } else { setMatter(props); setPage('result') }
+        console.log(props)
+        if (step === 0) { setStep(1); setReciever(props) } else {
+            setMatter(props);
+            // setPage('result') 
+        }
     }
     return (
 
@@ -51,18 +84,38 @@ const CardGeneration = ({ setPage, setReciever, setMatter }) => {
             extraClasses={steps[step].extraClasses}
             text={steps[step].header}
             inner={
-                <div className="grid grid-cols-2 gap-4 w-fit mx-auto mt-8 relative">
-                    {steps[step].btns.map(
-                        (btn, id) => (
-                            <Block
-                                classes={steps[step].classes}
-                                key={id}
-                                text={btn.name}
-                                img={btn.img}
-                                onClick={() => setCardProps(btn.prop)} />
-                        )
-                    )}
-                </div>
+                <>
+                    {!second ?
+                        <div className="grid grid-cols-2 gap-4 w-fit mx-auto mt-8 relative">
+                            {
+                                transition((style, item) => (
+                                    <animated.div
+                                        style={{ ...style, background: item.css }}>
+                                        <Block
+                                            classes={item.classes}
+                                            text={item.name}
+                                            img={item.img}
+                                            onClick={() => setNext(item)} />
+                                    </animated.div>
+                                ))
+                            }
+                        </div > :
+                        <div className="grid grid-cols-2 gap-4 w-fit mx-auto mt-8 relative">
+                            {
+                                transition2((style, item) => (
+                                    <animated.div
+                                        style={{ ...style, background: item.css }}>
+                                        <Block
+                                            classes={item.classes}
+                                            text={item.name}
+                                            img={item.img}
+                                            onClick={() => setNext(item)} />
+                                    </animated.div>
+                                ))
+                            }
+                        </div >
+                    }
+                </>
             }
             headerStyles={'text-3xl font-black'}
         />

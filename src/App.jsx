@@ -9,6 +9,8 @@ import Button from "./components/Button";
 import './assets/scss/styles.scss'
 import API from "./utils/API";
 import Header from "./components/Header";
+import Loader, { Message } from "./components/Loader";
+import Rules from "./screens/Rules";
 
 
 
@@ -22,6 +24,9 @@ const App = () => {
   const [reciever, setReciever] = useState();
   const [matter, setMatter] = useState();
   const [loading, setLoading] = useState(false)
+  const [imgGen, generateImg] = useState(null);
+  const [messageWin, showMessage] = useState(false)
+  const [messageAdditional, showMessageAdditional] = useState(false)
 
   const vkLogin = () => {
     bridge.subscribe((e) => {
@@ -55,30 +60,72 @@ const App = () => {
     if (vk_id) { loginUser(); }
   }, [vk_id])
 
+  const prepareImage = (matter) => {
+    setLoading('Ура! Мы готовим<br/>поздравление 😊')
+    // send()
+    API.post('/generate', {
+      vk_id: vk_id,
+      who: reciever,
+      how: matter
+    }).then(
+      response => {
+        if (response.data.success) {
+          generateImg(response.data.image_url);
+          setLoading(false)
+        }
+        else {
+          setLoading(false);
+          showMessage('Не получилось подготовить поздравление');
+          showMessageAdditional('Возможно, это ошибка сервера. Мы уже работаем над этим')
+        }
+
+      }
+    )
+      .catch(error => {
+        console.log(error.data);
+        setLoading(false);
+        showMessage('Не получилось подготовить поздравление');
+        showMessageAdditional('Возможно, это ошибка сервера. Мы уже работаем над этим')
+      })
+  }
+
 
 
   return (
     <div className="content-main">
-      {page === 'main' ? null :
+      {page === 'main' ? null : page === 'rules' ? null :
         <>
           <div className="my-4 bg-red text-white px-4 py-2 rounded-full absolute top-2 right-0 left-0 mx-auto w-fit">Баллы {points}</div>
           {/* <Button classes='focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 absolute' text="Назад" onClick={() => setPage('main')} /> */}
         </>
       }
       {page === 'main' ? <Main setPage={setPage} />
-        : page === 'cardgen' ? <CardGeneration setPage={setPage} setReciever={setReciever} setMatter={setMatter} />
-          : page === 'result' ? <Result setPage={setPage} reciever={reciever} matter={matter} vk_id={vk_id} setLoading={setLoading} /> :
-            page === 'task' ? <Task /> :
-              <MyPropose vk_id={vk_id} />}
-      {loading ? <div className="loader">
-        <div className="grid gap-4 items-center">
-          <Header text={loading} size="text-blue text-3xl mb-4 text-center" />
-          <svg class="spinner" viewBox="0 0 50 50">
-            <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
-          </svg>
-        </div>
-
-      </div> : null}
+        : page === 'cardgen' ? <CardGeneration setPage={setPage} setReciever={setReciever} setMatter={setMatter} prepareImage={prepareImage} />
+          : page === 'result' ?
+            <Result setPage={setPage} reciever={reciever} matter={matter} vk_id={vk_id} setLoading={setLoading} showMessage={showMessage}
+              showMessageAdditional={showMessageAdditional}
+              setPoints={setPoints}
+              /> :
+            page === 'task' ?
+              <Task vk_id={vk_id}
+                setLoading={setLoading}
+                setPoints={setPoints}
+                messageWin={messageWin}
+                showMessage={showMessage}
+                showMessageAdditional={showMessageAdditional} /> :
+              page === 'rules' ? <Rules setPage={setPage} /> :
+                <MyPropose
+                  vk_id={vk_id}
+                  setPoints={setPoints}
+                  setLoading={setLoading}
+                  showMessage={showMessage}
+                  showMessageAdditional={showMessageAdditional} />}
+      {loading ? <Loader loading={loading} /> : null}
+      {messageWin ? <Message
+        message={messageWin}
+        showMessage={showMessage}
+        showMessageAdditional={showMessageAdditional}
+        messageAdditional={messageAdditional} /> : null}
     </div>
   );
 }

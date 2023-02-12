@@ -27,7 +27,7 @@ const Main = ({ setPage }) => {
                         text='Сгенерировать'
 
                     />
-                    <div onClick={() => showPopup(true)
+                    <div onClick={() => setPage('rules')
                     }
                         className="mt-4 text-white underline hover:no-underline text-reg">Условия акции</div>
 
@@ -47,13 +47,7 @@ const Main = ({ setPage }) => {
 
                 />
             </div>
-            {
-                popup ?
-                    <Popup
-                        onClick={() => showPopup(false)}
-                        inner={<PopupInner setPage={setPage} />} />
-                    : null
-            }
+            
         </main>
     )
 }

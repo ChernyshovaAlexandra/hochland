@@ -93,3 +93,21 @@
         stroke-dashoffset: -124;
     }
 }
+@keyframes appearance{
+    0%{
+        transform: scale(0.2);
+        transform-origin: 50% 100%;
+    }
+    15%, 100%{
+        transform: scale(1);
+    }
+}
+
+.block-style{
+    animation: appearance 2s ease-in-out infinite;
+    @for $i from 1 through 4 {
+        &:nth-child(#{$i}) {
+          animation-delay: $i*.1s;
+        }
+      }
+}

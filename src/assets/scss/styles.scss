@@ -22,7 +22,7 @@ $red: #e60004;
     max-width: 780px;
     width: 100%;
     overflow-x: hidden;
-    
+
     .main {
         height: 100%;
         min-height: 100vh;
@@ -196,6 +196,9 @@ $red: #e60004;
             }
         }
     }
+    &-blueZ {
+        background: rgba(145, 215, 240, 1);
+    }
     &-blueL {
         background: #2ebef0;
         &.active {
@@ -250,39 +253,17 @@ h1 {
         color: $green;
     }
 }
-.button-st{
-    &:hover{
+.button-st {
+    &:hover {
         filter: brightness(1.2);
     }
 }
 .popup {
-    background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(4px);
     display: grid;
     place-items: center;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    margin: auto;
-    width: 100%;
-    @media screen and (min-width: 600px) {
-        max-height: 100vh;
-    }
-    top: 0;
-    left: 0;
-    z-index: 100;
-    &-inner {
-        width: 100vw;
-        @media screen and (min-width: 600px) {
-            width: calc(100vw - 4rem);
-            max-height: calc(100vh - 4rem);
-        }
-        max-width: 700px;
-        margin: auto;
 
-        background: white;
-        border: 3px solid $blue;
-    }
+    width: 100%;
+
     p {
         font-family: "Montserrat";
         font-style: normal;
@@ -337,5 +318,9 @@ h1 {
         width: 40%;
     }
 }
-
+.border {
+    &-blue {
+    border-color: $blue
+    }
+}
 @import "./animations";

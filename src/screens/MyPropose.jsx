@@ -2,23 +2,43 @@ import React, { useState } from "react";
 import Button from "../components/Button";
 import Header from "../components/Header";
 import API from "../utils/API";
-import { steps } from "./CardGeneration";
+import { steps } from "../constants/steps";
 
 
-const MyPropose = ({ vk_id }) => {
+const MyPropose = ({ vk_id, setPoints, setLoading, showMessage, showMessageAdditional }) => {
     const [text, setText] = useState('');
     const [person, setPerson] = useState('');
     const propose = (e) => {
         e.preventDefault();
-        console.log(text, "person: ", person)
-        // if (text) {
-        //     API.post('/form', {
-        //         vk_id: { vk_id },
-        //         text: text,
-        //         person: person,
-        //         category: ''
-        //     })
-        // }
+
+        if (text) {
+            setLoading('Спасибо за активность!<br />Мы уже проверяем ваше поздравление')
+            API.post('/form', {
+                vk_id: vk_id,
+                text: text,
+                person: person,
+                category: ''
+            })
+                .then(
+                    response => {
+                        if (response.data.success) {
+                            setLoading(false)
+                            showMessage('Ура! Мы начислили вам баллы')
+                            setPoints(response.data.points)
+                        } else {
+                            setLoading(false)
+                            showMessage('Что-то пошло не так и форма не отправилась')
+                            showMessageAdditional('Пожалуйста, попробуйте снова через несколько минут')
+                        }
+                    }
+                )
+                .catch(error => {
+                    setLoading(false)
+                    showMessage('Что-то пошло не так и форма не отправилась')
+                    showMessageAdditional('Пожалуйста, попробуйте снова через несколько минут')
+                })
+        }
+
     }
     return (
         <main className="blue-bg p-6 main grid place-items-center text-blue pt-20">
@@ -33,7 +53,7 @@ const MyPropose = ({ vk_id }) => {
                             О ком позаботиться?
                         </label>
 
-                        <select name="person" id="" className="rounded-lg mb-8" onChange={e=>setPerson(e.target.value)}>
+                        <select name="person" id="" className="rounded-lg mb-8 w-full" onChange={e => setPerson(e.target.value)}>
                             {
                                 steps[0].btns.map((opt, id) => (
                                     <option key={id} value={opt.prop} >
@@ -53,7 +73,7 @@ const MyPropose = ({ vk_id }) => {
                             id="text"
                             cols="30"
                             rows="10"
-                            onChange={e=>setText(e.target.value)}
+                            onChange={e => setText(e.target.value)}
                             maxLength={100} required>{text}</textarea>
                     </div>
                     <Button

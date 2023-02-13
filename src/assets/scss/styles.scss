@@ -22,7 +22,9 @@ $red: #e60004;
     max-width: 780px;
     width: 100%;
     overflow-x: hidden;
-
+    @media screen and (max-width: 760px) {
+        min-height: 100vh;
+    }
     .main {
         height: 100%;
         min-height: 100vh;
@@ -72,13 +74,21 @@ $red: #e60004;
 }
 .block-style {
     border: 3px solid transparent;
-
+    grid-template-rows: 1fr 35px;
+    gap: 1rem;
     &:hover {
         background: rgba(9, 41, 192, 1);
         border: 3px solid #fff;
         p {
             color: white;
         }
+    }
+}
+.fixed-body {
+    height: 100vh;
+    overflow: hidden;
+    @media screen and (min-width: 760px) {
+        height: 780px;
     }
 }
 .blue-bg {
@@ -145,30 +155,69 @@ $red: #e60004;
         &-res {
             background: #b20003;
         }
+        &-dot {
+            background: rgba(178, 0, 3, 1);
+            &.active {
+                position: relative;
+                &::before {
+                    content: "";
+                    position: absolute;
+                    width: calc(100% + 10px);
+                    height: calc(100% + 10px);
+                    left: -5px;
+                    top: -5px;
+                    border: 3px solid rgba(178, 0, 3, 1);
+                    border-radius: 50%;
+                }
+            }
+        }
     }
     &-blue {
         background: $blue;
+        &-res {
+            background: #0e98c8;
+        }
+        &-dot {
+            background: #2ebef0;
+            &.active {
+                position: relative;
+                &::before {
+                    content: "";
+                    position: absolute;
+                    width: calc(100% + 10px);
+                    height: calc(100% + 10px);
+                    left: -5px;
+                    top: -5px;
+                    border: 3px solid #2ebef0;
+                    border-radius: 50%;
+                }
+            }
+        }
     }
     &-orange {
         background: $orange;
     }
     &-yellow {
         background: $yellow;
-        &.active {
-            position: relative;
-            &::before {
-                content: "";
-                position: absolute;
-                width: calc(100% + 10px);
-                height: calc(100% + 10px);
-                left: -5px;
-                top: -5px;
-                border: 3px solid $yellow;
-                border-radius: 50%;
-            }
-        }
+
         &-res {
             background: #ff6b00;
+        }
+        &-dot {
+            background: #ffd600;
+            &.active {
+                position: relative;
+                &::before {
+                    content: "";
+                    position: absolute;
+                    width: calc(100% + 10px);
+                    height: calc(100% + 10px);
+                    left: -5px;
+                    top: -5px;
+                    border: 3px solid #ffd600;
+                    border-radius: 50%;
+                }
+            }
         }
     }
     &-darkBlue {
@@ -182,17 +231,21 @@ $red: #e60004;
         &-res {
             background: #006930;
         }
-        &.active {
-            position: relative;
-            &::before {
-                content: "";
-                position: absolute;
-                width: calc(100% + 10px);
-                height: calc(100% + 10px);
-                left: -5px;
-                top: -5px;
-                border: 3px solid #7db713;
-                border-radius: 50%;
+        &-dot {
+            background: #7db713;
+
+            &.active {
+                position: relative;
+                &::before {
+                    content: "";
+                    position: absolute;
+                    width: calc(100% + 10px);
+                    height: calc(100% + 10px);
+                    left: -5px;
+                    top: -5px;
+                    border: 3px solid #7db713;
+                    border-radius: 50%;
+                }
             }
         }
     }
@@ -214,9 +267,6 @@ $red: #e60004;
                 border-radius: 50%;
             }
         }
-        &-res {
-            background: #0e98c8;
-        }
     }
 }
 .h {
@@ -236,12 +286,21 @@ h1 {
     }
     &-yellow {
         color: $yellow;
+        &-res{
+            color: #ff6b00;
+        }
     }
     &-blue {
         color: $blue;
+        &-res {
+            color: #0e98c8;
+        }
     }
     &-red {
         color: red;
+        &-res{
+            color: #b20003;
+        }
     }
     &-reg {
         font-family: "Montserrat";
@@ -251,6 +310,9 @@ h1 {
     }
     &-green {
         color: $green;
+        &-res{
+            color: #006930;
+        }
     }
 }
 .button-st {
@@ -320,7 +382,7 @@ h1 {
 }
 .border {
     &-blue {
-    border-color: $blue
+        border-color: $blue;
     }
 }
 @import "./animations";

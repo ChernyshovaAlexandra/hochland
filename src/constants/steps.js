@@ -16,23 +16,22 @@ export const steps = [
         header: '<span class="text-white text-center">О ком хотите<br/>позаботиться?</span>',
         extraClasses: 'blue-bg round overflow-hidden main',
         btns: [
-            { name: 'О родственнике', img: card1, prop: 'family' },
-            { name: 'О коллеге', img: card2, prop: "collegue" },
-            { name: 'О любимом человеке', img: card3, prop: 'lover' },
-            { name: 'О друге/подруге', img: card4, prop: 'friends' }
+            { id: 1, name: 'О родственнике', img: card1, prop: 'family' },
+            { id: 2, name: 'О коллеге', img: card2, prop: "collegue" },
+            { id: 3, name: 'О любимом человеке', img: card3, prop: 'lover' },
+            { id: 4, name: 'О друге/подруге', img: card4, prop: 'friends' }
 
         ]
     },
     {
         id: 2,
-        header: '<span class="text-white text-center">В каком направлении вы бы<br class="hidden sm:block" />"хотели проявить заботу?</span>',
+        header: '<span class="text-white text-center">В каком направлении вы бы<br class="hidden sm:block" />хотели проявить заботу?</span>',
         extraClasses: 'blue-bg round overflow-hidden main',
-        // classes: 'bg-blue border-4 border-white w-40 sm:w-60',
         btns: [
             { name: 'Путешествия', img: card5, prop: 'trip' },
-            { name: 'Развлечения', img: card6, prop: 'advertisement' },
-            { name: 'Спорт', img: card7, prop: 'sport' },
-            { name: 'Хобби', img: card8, prop: 'hobby' }
+            { name: 'Увлечения', img: card6, prop: 'advertisement' },
+            { name: 'Работа', img: card7, prop: 'work' },
+            { name: 'Домашние дела', img: card8, prop: 'housework' }
         ]
     }
 ]

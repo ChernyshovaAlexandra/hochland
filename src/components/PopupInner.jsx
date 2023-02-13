@@ -15,19 +15,19 @@ const PopupInner = ({ setPage }) => {
             <div className="min-[766px]:flex gap-4 h-fit">
                 <div className="min-[766px]:w-5/12 w-full h-full">
                     <Header text="Правила" size="text-white text-center text-2xl" />
-                    <div className="grid gap-4 h-full -mt-2" style={{ 'gridTemplateRows': '30% 30% 38%' }}>
+                    <div className="grid gap-4 h-full -mt-2" style={{ 'gridTemplateRows': '33% 28.3% 37%' }}>
                         <div className="p-4 rounded-lg bg-lightBlue text-blue font-bold">
                             <img className="w-16 h-16 object-contain mb-4" src={img1} alt="" />
-                            <p>1. Выбирайте о ком и в какой сфере хотели бы поделиться
+                            <p>Выберите о ком и в какой сфере вы бы хотели позаботиться
                             </p>
                         </div>
                         <div className="p-4 rounded-lg bg-lightBlue text-blue font-bold">
-                            <img className="w-16 h-16 object-contain mb-4" src={img2} alt="" />
-                            <p>2. Генерируйте карточку заботы</p>
+                            <img className="w-16 h-18 object-contain mb-4" src={img2} alt="" />
+                            <p>Создайте карточку заботы</p>
                         </div>
                         <div className="p-4 rounded-lg bg-lightBlue text-blue font-bold">
-                            <img className="w-16 h-16 object-contain mb-4" src={img3} alt="" />
-                            <p>3. Делитесь карточками, выполняйте задания и участвуйте в розыгрыше ценных призов от Hochland!</p>
+                            <img className="w-16 h-12 object-contain mb-4" src={img3} alt="" />
+                            <p>Отправляйте карточки друзьям и близким и участвуйте в розыгрыше ценных призов от Hochland!</p>
                         </div>
                     </div>
                 </div>

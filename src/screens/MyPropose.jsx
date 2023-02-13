@@ -5,9 +5,9 @@ import API from "../utils/API";
 import { steps } from "../constants/steps";
 
 
-const MyPropose = ({ vk_id, setPoints, setLoading, showMessage, showMessageAdditional }) => {
+const MyPropose = ({ vk_id, setPage, setPoints, setLoading, showMessage, showMessageAdditional, points }) => {
     const [text, setText] = useState('');
-    const [person, setPerson] = useState('');
+    const [person, setPerson] = useState(steps[0].btns[0].prop);
     const propose = (e) => {
         e.preventDefault();
 
@@ -23,8 +23,19 @@ const MyPropose = ({ vk_id, setPoints, setLoading, showMessage, showMessageAddit
                     response => {
                         if (response.data.success) {
                             setLoading(false)
-                            showMessage('Ура! Мы начислили вам баллы')
                             setPoints(response.data.points)
+                            if (response.data.limit) {
+                                showMessage('Спасибо за вашу активность!')
+                                showMessageAdditional('Вы уже получили баллы за выполнение этого задания😊')
+                            }
+                            else {
+                                showMessage('Ура! Мы начислили вам баллы')
+                                showMessageAdditional(`Вы заработали ${response.data.points - points} баллов`)
+                            }
+                            setPerson('');
+                            setText('');
+                            setPage('result')
+
                         } else {
                             setLoading(false)
                             showMessage('Что-то пошло не так и форма не отправилась')

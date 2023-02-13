@@ -4,10 +4,9 @@ import share from '../assets/images/share.png'
 import publicate from '../assets/images/publicate.png'
 import Button from "../components/Button";
 import API from "../utils/API";
-import { Message } from "../components/Loader";
 
 
-const Task = ({ vk_id, setLoading, setPoints, showMessage, showMessageAdditional }) => {
+const Task = ({ vk_id, setLoading, setPoints, showMessage, showMessageAdditional, setPage, points }) => {
     const checkTask = () => {
         setLoading('Бежим проверять! 😊')
         API.post('/task_done', {
@@ -17,6 +16,15 @@ const Task = ({ vk_id, setLoading, setPoints, showMessage, showMessageAdditional
                 if (response.data.success) {
                     setLoading(false);
                     setPoints(response.data.points)
+                    if (response.data.limit) {
+                        showMessage('Спасибо за вашу активность!')
+                        showMessageAdditional('Вы уже получили баллы за выполнение этого задания😊')
+                    }
+                    else {
+                        showMessage('Ура! Мы начислили вам баллы')
+                        showMessageAdditional(`Вы заработали ${response.data.points - points} баллов`)
+                    }
+                    setPage('result')
                 }
             })
             .catch(error => {
@@ -51,7 +59,7 @@ const Task = ({ vk_id, setLoading, setPoints, showMessage, showMessageAdditional
                         onClick={() => { checkTask() }} />
                 </div>
             </div>
-            
+
         </main>
     )
 }

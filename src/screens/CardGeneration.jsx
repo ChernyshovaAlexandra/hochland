@@ -62,8 +62,8 @@ const CardGeneration = ({ setPage, setReciever, setMatter, prepareImage }) => {
         }
         else {
             setCardProps(item.prop);
+            prepareImage(item.prop);
             setTimeout(() => {
-                prepareImage(item.prop);
                 setPage('result')
             }, 800);
         }
@@ -72,10 +72,8 @@ const CardGeneration = ({ setPage, setReciever, setMatter, prepareImage }) => {
 
 
     const setCardProps = (props) => {
-        console.log(props)
         if (step === 0) { setStep(1); setReciever(props) } else {
             setMatter(props);
-            // setPage('result') 
         }
     }
     return (

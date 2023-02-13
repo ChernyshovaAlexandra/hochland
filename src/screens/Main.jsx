@@ -18,18 +18,21 @@ const Main = ({ setPage }) => {
 
                     <Header
                         size="text-xl sm:text-2xl text-white"
-                        text={`Поднимите настроение<br class="sm:block hidden" /> близким и подарите<br class="sm:block hidden" /> кусочек <span class="text-yellow">сыр</span>дечной<br class="sm:block hidden" /> заботы вместе с Hochland!`} />
-                    <p className="my-5 text-white text-lg font-bold">
-                        <span className="text-yellow">Генерируй карточки</span> заботы<br /> и участвуй в розыгрыше<br /> ценных призов
+                        text={`Подарите близким <span class="text-yellow">заботу</span> <br class="hidden sm:block" />и хорошее настроение вместе <br class="hidden sm:block" />с <span class="text-yellow">Hochland</span>!`} />
+                    <p className=" mt-3 mb-8 text-white text-lg font-bold">
+                    Отправляйте карточки заботы <br /> и принимайте участие<br /> в <span className="text-yellow">розыгрыше</span> ценных<br /> призов
+                        {/* <span className="text-yellow">Генерируй карточки</span> заботы<br /> и участвуй в розыгрыше<br /> ценных призов */}
                     </p>
+                    
                     <Button
+                    classes={'bg-yellow px-4 py-3 rounded-xl text-blue font-bold uppercase'}
                         onClick={() => { setPage('cardgen') }}
-                        text='Сгенерировать'
+                        text='Сделать ❤️ карточку'
 
                     />
                     <div onClick={() => setPage('rules')
                     }
-                        className="mt-4 text-white underline hover:no-underline text-reg">Условия акции</div>
+                        className="mt-4 text-white underline hover:no-underline text-reg cursor-pointer">Правила акции</div>
 
                 </div>
                 <div className="mainPic flex-1 self-end sm:w-9/12 -ml-16 min-[766px]:static absolute right-0 bottom-44 w-7/12 -mb-4 sm:-mb-0 z-10 min-[530px]:w-6/12 min-[530px]:-mb-8 min-[766px]:-mb-0">
@@ -38,8 +41,8 @@ const Main = ({ setPage }) => {
             </div>
 
             <div className="absolute -bottom-6 min-[766px]:-bottom-2 p-6 bg-darkBlue text-white text-reg rounded-lg sm:w-4/12 w-full sm:left-8 z-20">
-                <p> Поздравляйте сырдечно <br className="sm:block hidden" />
-                    вместе с Hochland<br className="sm:block hidden" /> и ТС «Лента»</p>
+                <p> Поздравляйте с теплом и заботой
+                    вместе <br className="sm:block hidden" />с Hochland</p>
                 <Button
                     onClick={() => { }}
                     text='Участвовать'

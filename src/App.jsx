@@ -24,19 +24,31 @@ const App = () => {
   const [reciever, setReciever] = useState();
   const [matter, setMatter] = useState();
   const [loading, setLoading] = useState(false)
-  const [imgGen, generateImg] = useState(null);
+  const [card_url, generateImg] = useState(null);
   const [messageWin, showMessage] = useState(false)
-  const [messageAdditional, showMessageAdditional] = useState(false)
+  const [messageAdditional, showMessageAdditional] = useState(false);
+  const [greeting, setGreeting] = useState('...это порадовать родителей после работы домашними бургерами с плавленым сыром Hochland')
+
 
   const vkLogin = () => {
     bridge.subscribe((e) => {
       if (e.detail.type === "VKWebAppGetUserInfoResult") {
+       
         if (!vk_id) {
-          setId(e.detail.data.id);
+          if (!e.detail.data.id) {
+            showMessage('Не удалось получить данные от ВКонтакте');
+            showMessageAdditional('Пожалуйста, попробуйте обновить страницу')
+          } else {
+            setId(e.detail.data.id);
+          }
         }
         if (!name) {
           setName(e.detail.data.first_name + ' ' + e.detail.data.last_name);
         }
+        console.log(vk_id,e.detail)
+      }
+      else {
+        // console.log(1111, e.detail)
       }
     });
     bridge.send("VKWebAppGetUserInfo");
@@ -65,13 +77,21 @@ const App = () => {
     // send()
     API.post('/generate', {
       vk_id: vk_id,
-      who: reciever,
-      how: matter
+      person: reciever,
+      category: matter
     }).then(
       response => {
         if (response.data.success) {
           generateImg(response.data.image_url);
+          setGreeting(response.data.text)
           setLoading(false)
+          showMessage('Поздравление готово!');
+          setPoints(response.data.points)
+          if (response.data.points - points) {
+            showMessageAdditional(`Вы заработали ${response.data.points - points} баллов! Осталось выбрать оформление. Используйте кнопки для переключения цвета`)
+          } else {
+            showMessageAdditional(`Осталось выбрать оформление. Используйте кнопки для переключения цвета`)
+          }
         }
         else {
           setLoading(false);
@@ -92,40 +112,70 @@ const App = () => {
 
 
   return (
-    <div className="content-main">
+    <div className={`${loading || messageWin ? 'fixed-body' : ''} content-main`}>
       {page === 'main' ? null : page === 'rules' ? null :
         <>
           <div className="my-4 bg-red text-white px-4 py-2 rounded-full absolute top-2 right-0 left-0 mx-auto w-fit">Баллы {points}</div>
-          {/* <Button classes='focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 absolute' text="Назад" onClick={() => setPage('main')} /> */}
         </>
       }
-      {page === 'main' ? <Main setPage={setPage} />
-        : page === 'cardgen' ? <CardGeneration setPage={setPage} setReciever={setReciever} setMatter={setMatter} prepareImage={prepareImage} />
+      {
+        page !== 'task' && page !== 'propose' ? null : <Button
+          classes='absolute top-2 left-2 text-blue bg-lightBlue rounded-lg p-2'
+          text={`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" class="w-6 h-6">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" />
+        </svg>`
+          } onClick={() => setPage('result')} />
+      }
+
+      {page === 'main' ? <Main setPage={vk_id ? setPage : console.log()} />
+        : page === 'cardgen' ?
+          <CardGeneration
+            setPage={setPage}
+            setReciever={setReciever}
+            setMatter={setMatter}
+            prepareImage={prepareImage}
+            setGreeting={setGreeting} />
           : page === 'result' ?
-            <Result setPage={setPage} reciever={reciever} matter={matter} vk_id={vk_id} setLoading={setLoading} showMessage={showMessage}
+            <Result
+              greeting={greeting}
+              setPage={setPage}
+              reciever={reciever}
+              matter={matter}
+              vk_id={vk_id}
+              setLoading={setLoading}
+              showMessage={showMessage}
               showMessageAdditional={showMessageAdditional}
               setPoints={setPoints}
-              /> :
+              points={points}
+              card_url={card_url}
+            /> :
             page === 'task' ?
               <Task vk_id={vk_id}
                 setLoading={setLoading}
                 setPoints={setPoints}
                 messageWin={messageWin}
                 showMessage={showMessage}
+                setPage={setPage}
+                points={points}
                 showMessageAdditional={showMessageAdditional} /> :
-              page === 'rules' ? <Rules setPage={setPage} /> :
-                <MyPropose
-                  vk_id={vk_id}
-                  setPoints={setPoints}
-                  setLoading={setLoading}
-                  showMessage={showMessage}
-                  showMessageAdditional={showMessageAdditional} />}
+              page === 'rules' ?
+                <Rules setPage={setPage} /> :
+                page === 'propose' ?
+                  <MyPropose
+                    setPage={setPage}
+                    vk_id={vk_id}
+                    setPoints={setPoints}
+                    points={points}
+                    setLoading={setLoading}
+                    showMessage={showMessage}
+                    showMessageAdditional={showMessageAdditional} /> : null}
       {loading ? <Loader loading={loading} /> : null}
-      {messageWin ? <Message
-        message={messageWin}
-        showMessage={showMessage}
-        showMessageAdditional={showMessageAdditional}
-        messageAdditional={messageAdditional} /> : null}
+      {messageWin ?
+        <Message
+          message={messageWin}
+          showMessage={showMessage}
+          showMessageAdditional={showMessageAdditional}
+          messageAdditional={messageAdditional} /> : null}
     </div>
   );
 }

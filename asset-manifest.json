@@ -1,8 +1,9 @@
 {
   "files": {
     "main.css": "/static/css/main.fe2c94f2.css",
-    "main.js": "/static/js/main.e4eb8e7a.js",
+    "main.js": "/static/js/main.c39b3781.js",
     "static/js/787.1bc118ff.chunk.js": "/static/js/787.1bc118ff.chunk.js",
+    "static/media/576.jpg": "/static/media/576.6090682cc0aeea9a48f3.jpg",
     "static/media/pic-bg.jpeg": "/static/media/pic-bg.3555f55ed2c534bf4a6d.jpeg",
     "static/media/MorrisModernC.otf": "/static/media/MorrisModernC.50927a15b96ce6b3d653.otf",
     "static/media/card8.png": "/static/media/card8.df08c5ed151f8c92a080.png",
@@ -19,11 +20,11 @@
     "static/media/arrT.svg": "/static/media/arrT.d6f52f5e08581eaf6e1cf3e43d96518c.svg",
     "static/media/arrB.svg": "/static/media/arrB.c7b04d9add51fe975ac50fb51b0b860f.svg",
     "main.fe2c94f2.css.map": "/static/css/main.fe2c94f2.css.map",
-    "main.e4eb8e7a.js.map": "/static/js/main.e4eb8e7a.js.map",
+    "main.c39b3781.js.map": "/static/js/main.c39b3781.js.map",
     "787.1bc118ff.chunk.js.map": "/static/js/787.1bc118ff.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.fe2c94f2.css",
-    "static/js/main.e4eb8e7a.js"
+    "static/js/main.c39b3781.js"
   ]
 }

@@ -43,7 +43,7 @@ const FinalCard = ({ bg, color, reciever, greeting, colors, setInd, index, setCo
 
     return (
         <>
-            <div className="min-[766px]:w-72 final-pic cursor-pointer" onClick={() => zoom(true)}>
+            <div className="min-[766px]:w-80 final-pic cursor-pointer card-style" onClick={() => zoom(true)}>
                 <div className="bg-white border-4 with-logo border-white rounded-lg overflow-hidden w-full text-center relative">
 
                     <div className={`image-frame bg-${color}-res relative w-full h-64 -mt-6`}>
@@ -52,13 +52,13 @@ const FinalCard = ({ bg, color, reciever, greeting, colors, setInd, index, setCo
                         <div className={`absolute -bottom-6 border-2 border-white bg-${color}-res text-white rounded-full left-0 w-fit right-0 mx-auto px-4 moris pt-2 pb-1`}>
                             Сердечно поздравляем</div>
                     </div>
-                    <div className="p-3 mt-4">
+                    <div className="mt-8">
                         <span className="text-blue mx-auto">
-                            <span className="moris font-bold ">
+                            <span className="moris font-bold py-3">
                                 Лучший подарок - <span className={`text-${color}-res`}>это забота!</span><br />
-                                а забота с Хохланд это…<br />
+                                а забота с Hochland это…<br />
                             </span>
-                            {greeting ? <div className="font-bold mt-2 text-xs">{greeting}</div> : null}
+                            {greeting ? <div className="font-bold mt-2 text-xs pb-3">{greeting}</div> : null}
                         </span>
                     </div>
                 </div>

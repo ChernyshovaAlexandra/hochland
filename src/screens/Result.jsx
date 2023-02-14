@@ -16,16 +16,19 @@ import { finalUrl, vk_link } from "../constants/link";
 
 
 
-const Result = ({ setPage, reciever, vk_id, greeting, setLoading, showMessage, showMessageAdditional, setPoints, points, card_url, limit }) => {
-
+const Result = ({ setPage, reciever, vk_id, greeting, setLoading, showMessage, showMessageAdditional, setPoints, points, card_url, limit, setBigCard, zoomedCard }) => {
+    // const [finLink, generateLink] = useState()
     let mobile = window.innerWidth < 740
     useEffect(() => {
         setLoading(false)
     }, [])
     const send = () => {
+        let finLink = finalUrl(card_url, color)
+
+
         if (mobile) {
             bridge.send('VKWebAppShare', {
-                link: finalUrl(card_url, color)
+                link: finLink
             })
                 .then((data) => {
                     setLoading('Спасибо за активность! Проверяем задание');
@@ -36,8 +39,9 @@ const Result = ({ setPage, reciever, vk_id, greeting, setLoading, showMessage, s
                             .then(response => {
                                 if (response.data.success) {
                                     if (response.data.limit) {
-                                        showMessage('Спасибо за вашу активность!')
-                                        showMessageAdditional('Вы уже получили баллы за выполнение этого задания😊')
+                                        showMessage('Спасибо за активность!')
+                                        showMessageAdditional(`Начисление баллов за отправку сообщений происходит за 5 карточек в день, 30 карточек в неделю и 50 карточек за весь период акции.
+                                        Выполняйте другие задания, чтобы заработать дополнительные баллы`)
                                     }
                                     else {
                                         showMessage('Ура! Мы начислили вам баллы')
@@ -63,9 +67,9 @@ const Result = ({ setPage, reciever, vk_id, greeting, setLoading, showMessage, s
         } else {
             document.getElementsByClassName('vk-share')[0].append(
                 window.VK.Share.button({
-                    url: finalUrl(card_url, color),
+                    url: finLink,
                     title: `Лучший подарок - это забота! ${greeting}`,
-                    image: finalUrl(card_url, color),
+                    image: finLink,
                     noparse: true
                 }))
             window.VK.Share.click(0, this)
@@ -74,7 +78,7 @@ const Result = ({ setPage, reciever, vk_id, greeting, setLoading, showMessage, s
                     .then(res => {
                         if (res.data.success) {
                             if (res.data.limit) {
-                                showMessage('Спасибо за вашу активность!')
+                                showMessage('Спасибо за активность!')
                                 showMessageAdditional('Вы уже получили баллы за выполнение этого задания😊')
                             }
                             else {
@@ -98,13 +102,14 @@ const Result = ({ setPage, reciever, vk_id, greeting, setLoading, showMessage, s
 
     }
     const shareOnTheWall = () => {
-        console.log(finalUrl(card_url, color))
+        let finLink = finalUrl(card_url, color)
+
         const process = mobile ? 'VKWebAppShowWallPostBox' : 'VKWebAppShare';
         let attachments = mobile ? {
             message: `Лучший подарок - это забота! ${greeting}`,
-            attachments: finalUrl(card_url, color)
+            attachments: finLink
         } : {
-            link: finalUrl(card_url, color)
+            link: finLink
         };
 
 
@@ -118,8 +123,9 @@ const Result = ({ setPage, reciever, vk_id, greeting, setLoading, showMessage, s
                         .then(response => {
                             if (response.data.success) {
                                 if (response.data.limit) {
-                                    showMessage('Спасибо за вашу активность!')
-                                    showMessageAdditional('Вы уже получили баллы за выполнение этого задания😊')
+                                    showMessage('Спасибо за активность!')
+                                    showMessageAdditional(`Начисление баллов за репост происходит один раз в неделю.
+                                    Выполняйте другие задания, чтобы заработать дополнительные баллы`)
                                 }
                                 else {
                                     showMessage('Ура! Мы начислили вам баллы')
@@ -161,13 +167,12 @@ const Result = ({ setPage, reciever, vk_id, greeting, setLoading, showMessage, s
     const [index, setInd] = useState(0);
     const [color, setColor] = useState(colors[index].col);
     const [bg, setBg] = useState(colors[index].arc);
-    const [zoomedCard, setBigCard] = useState(false)
     const zoom = (action) => {
         setBigCard(action)
     }
     return (
         <main className="blue-bg min-[766px]:px-8 px-4 pb-6 min-[766px]:pb-8 pt-20 main">
-            <div className="flex gap-4 flex-wrap">
+            <div className="flex gap-4 flex-wrap sm:justify-start justify-center">
                 <div className="flex-auto min-[766px]:w-32 w-full relative">
                     <Header text={'<span class="text-white">Сердечное поздравление готово!</span>'}
                         size="text-3xl font-white text-left" />
@@ -199,7 +204,7 @@ const Result = ({ setPage, reciever, vk_id, greeting, setLoading, showMessage, s
                     }} classes="bg-yellow rounded-full p-3 w-full text-center font-bold text-sm mt-4" text="Поделиться в ЛС | +10" />
                     <Button onClick={() => {
                         shareOnTheWall()
-                    }} classes="bg-yellow rounded-full p-3 w-full text-center font-bold text-sm mt-2" text="Сделать репост | +10" />
+                    }} classes="bg-yellow rounded-full p-3 w-full text-center font-bold text-sm mt-2" text="Сделать репост | +50" />
                 </div>
                 <div className="rounded-lg text-center p-4 flex flex-col justify-between text-blue bg-lightGreen hover:scale-105 transition ease-in-out duration-300 cursor-pointer">
                     <Header text="Прояви заботу" size={'text-xl'} />
@@ -215,7 +220,7 @@ const Result = ({ setPage, reciever, vk_id, greeting, setLoading, showMessage, s
                 <div className="hidden vk-share"></div>
             </div>
             {zoomedCard ?
-                <div className="loader z-40 fin"  onClick={() => { zoom(false); }}>
+                <div className="loader z-40 fin" onClick={() => { zoom(false); }}>
                     <div className="cancel-b absolute top-16 right-24 text-blue cursor-pointer bg-blue-100 rounded-lg hover:bg-blue-200" onClick={() => { zoom(false); }}>
                         <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"></path>

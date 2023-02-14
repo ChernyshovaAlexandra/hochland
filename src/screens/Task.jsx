@@ -20,12 +20,12 @@ const Task = ({ vk_id, setLoading, setPoints, showMessage, showMessageAdditional
                     setLoading(false);
                     setPoints(response.data.points)
                     if (response.data.limit) {
-                        showMessage('Спасибо за вашу активность!')
+                        showMessage('Спасибо за активность!')
                         showMessageAdditional('Вы уже получили баллы за выполнение этого задания😊')
                     }
                     else {
-                        showMessage('Ура! Мы начислили вам баллы')
-                        showMessageAdditional(`Вы заработали ${response.data.points - points} баллов`)
+                        showMessage('Спасибо за активность!')
+                        showMessageAdditional(`Ваше задание проверяется модераторами. После проверки мы начислим 100 баллов`)
                     }
                     setPage('result')
                 }
@@ -39,7 +39,7 @@ const Task = ({ vk_id, setLoading, setPoints, showMessage, showMessageAdditional
     return (
         <main className="blue-bg p-6 main grid place-items-center text-blue pt-20">
             <div className="bg-white rounded-lg min-[766px]:p-8 p-5 m-auto min-[766px]:w-10/12 h-fit">
-                <Header text={'Приготовить завтрак с сыром Hochland для …'}
+                <Header text={'Прояви заботу вместе с Hochland'}
                     size={'min-[766px]:text-3xl text-xl text-blue text-center min-[766px]:mb-12 mb-8'}
                 />
                 <div className="content">
@@ -55,14 +55,14 @@ const Task = ({ vk_id, setLoading, setPoints, showMessage, showMessageAdditional
                     </div>
                     <div className="min-[766px]:p-8 p-5 h-44 bg-lightBlue rounded-lg font-bold text-blue text-reg mt-4">
                         <p>Получи 100 баллов<br />и участвуй в розыгрыше призов</p>
-                        <div className="mt-4 grid grid-cols-3 gap-1 w-7/12">
+                        <div className="mt-4 grid grid-cols-3 gap-1 sm:w-7/12">
                             <img className="w-16 h-16" src={img1} alt="" />
                             <img className="w-16 h-16" src={img2} alt="" />
                             <img className="w-16 h-16" src={img3} alt="" />
                         </div>
                     </div>
                     <Button
-                        text={'Готово!'}
+                        text={'Выполнить задание!'}
                         classes="bg-yellow rounded-full py-3 px-12 mx-auto block w-fit text-center font-bold text-sm mt-4"
                         onClick={() => { checkTask() }} />
                 </div>

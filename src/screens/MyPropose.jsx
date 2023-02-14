@@ -25,12 +25,12 @@ const MyPropose = ({ vk_id, setPage, setPoints, setLoading, showMessage, showMes
                             setLoading(false)
                             setPoints(response.data.points)
                             if (response.data.limit) {
-                                showMessage('Спасибо за вашу активность!')
+                                showMessage('Спасибо за активность!')
                                 showMessageAdditional('Вы уже получили баллы за выполнение этого задания😊')
                             }
                             else {
-                                showMessage('Ура! Мы начислили вам баллы')
-                                showMessageAdditional(`Вы заработали ${response.data.points - points} баллов`)
+                                showMessage('Спасибо за активность!')
+                                showMessageAdditional(`Ваше задание проверяется модераторами. После проверки мы начислим 30 баллов`)
                             }
                             setPerson('');
                             setText('');
@@ -85,7 +85,7 @@ const MyPropose = ({ vk_id, setPage, setPoints, setLoading, showMessage, showMes
                             cols="30"
                             rows="10"
                             onChange={e => setText(e.target.value)}
-                            maxLength={100} required>{text}</textarea>
+                            required>{text}</textarea>
                     </div>
                     <Button
                         type={'submit'}

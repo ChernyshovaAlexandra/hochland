@@ -15,7 +15,7 @@ const PopupInner = ({ setPage }) => {
             <div className="min-[766px]:flex gap-4 h-fit">
                 <div className="min-[766px]:w-5/12 w-full h-full">
                     <Header text="Правила" size="text-white text-center text-2xl" />
-                    <div className="grid gap-4 h-full -mt-2" style={{ 'gridTemplateRows': '33% 28.3% 37%' }}>
+                    <div className="grid gap-4 h-full -mt-2 grid-mob" style={{ 'gridTemplateRows': '33% 28.3% 37%' }}>
                         <div className="p-4 rounded-lg bg-lightBlue text-blue font-bold">
                             <img className="w-16 h-16 object-contain mb-4" src={img1} alt="" />
                             <p>Выберите о ком и в какой сфере вы бы хотели позаботиться

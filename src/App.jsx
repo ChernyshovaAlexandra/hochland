@@ -11,6 +11,7 @@ import API from "./utils/API";
 import Header from "./components/Header";
 import Loader, { Message } from "./components/Loader";
 import Rules from "./screens/Rules";
+import CardReady from "./screens/CardReady";
 
 
 
@@ -29,12 +30,16 @@ const App = () => {
   const [limit, showLimit] = useState(false)
   const [messageAdditional, showMessageAdditional] = useState(false);
   const [greeting, setGreeting] = useState('...это порадовать родителей после работы домашними бургерами с плавленым сыром Hochland')
+  const [hash, setHash] = useState('')
+  const [zoomedCard, setBigCard] = useState(false)
+
+
+
 
 
   const vkLogin = () => {
     bridge.subscribe((e) => {
       if (e.detail.type === "VKWebAppGetUserInfoResult") {
-
         if (!vk_id) {
           if (!e.detail.data.id) {
             showMessage('Не удалось получить данные от ВКонтакте');
@@ -47,7 +52,6 @@ const App = () => {
           setName(e.detail.data.first_name + ' ' + e.detail.data.last_name);
         }
       }
-
     });
     bridge.send("VKWebAppGetUserInfo");
   };
@@ -65,9 +69,13 @@ const App = () => {
   useEffect(() => {
     bridge.send("VKWebAppInit");
     vkLogin();
+    getHash();
   }, []);
   useEffect(() => {
-    if (vk_id) { loginUser(); }
+    if (vk_id) {
+      loginUser();
+
+    }
   }, [vk_id])
 
   const prepareImage = (matter) => {
@@ -89,7 +97,7 @@ const App = () => {
             showMessage('Поздравление готово!');
             setPage('result')
           }, 800);
-          if (response.data.points - points) {
+          if (response.data.points - points && !response.data.limit) {
             showMessageAdditional(`Вы заработали ${response.data.points - points} баллов! Осталось выбрать оформление. Используйте кнопки для переключения цвета`)
           } else {
             showMessageAdditional(`Осталось выбрать оформление. Используйте кнопки для переключения цвета`)
@@ -116,79 +124,106 @@ const App = () => {
       })
   }
 
+  const getHash = () => {
+    var params = window.location.href.split('#');
+    params.shift()
+    if (params[0]) {
+      let hash = params[0].split('&');
+      let img = hash.filter(i => i.indexOf('image=') !== -1)[0].replace('image=', '')
+      let color = hash.filter(i => i.indexOf('color=') !== -1)[0].replace('color=', '')
+
+      setHash({ image: img, color: color })
+
+    }
+  }
+
+
+
+
 
 
   return (
-    <div className={`${loading || messageWin ? 'fixed-body' : ''} content-main`}>
-      {page === 'main' ? null : page === 'rules' ? null :
-        <>
-          <div className="my-4 bg-red text-white px-4 py-2 rounded-full absolute top-2 right-0 left-0 mx-auto w-fit">Баллы {points}</div>
-        </>
-      }
-      {
-        page === 'result' ?
-          <Button
-            classes='absolute top-2 left-2 text-blue bg-lightBlue rounded-lg p-2'
-            text={`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" class="w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" /></svg>`}
-            onClick={() => setPage('main')} /> : null
-      }
-{
-        page === 'task' ?
-          <Button
-            classes='absolute top-2 left-2 text-blue bg-lightBlue rounded-lg p-2'
-            text={`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" class="w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" /></svg>`}
-            onClick={() => setPage('result')} /> : null
-      }
-      {page === 'main' ? <Main setPage={vk_id ? setPage : console.log()} />
-        : page === 'cardgen' ?
-          <CardGeneration
-            setPage={setPage}
-            setReciever={setReciever}
-            setMatter={setMatter}
-            prepareImage={prepareImage}
-            setGreeting={setGreeting} />
-          : page === 'result' ?
-            <Result
-              greeting={greeting}
-              setPage={setPage}
-              reciever={reciever}
-              matter={matter}
-              vk_id={vk_id}
-              setLoading={setLoading}
-              showMessage={showMessage}
-              showMessageAdditional={showMessageAdditional}
-              setPoints={setPoints}
-              points={points}
-              limit={limit}
-              card_url={card_url}
-            /> :
-            page === 'task' ?
-              <Task vk_id={vk_id}
-                setLoading={setLoading}
-                setPoints={setPoints}
-                messageWin={messageWin}
-                showMessage={showMessage}
-                setPage={setPage}
-                points={points}
-                showMessageAdditional={showMessageAdditional} /> :
-              page === 'rules' ?
-                <Rules setPage={setPage} /> :
-                page === 'propose' ?
-                  <MyPropose
+    <div className={`${loading || messageWin || zoomedCard ? 'fixed-body' : ''} content-main`}>
+      <>
+        {hash ?
+          <CardReady image={hash['image']} color={hash['color']} setHash={setHash} /> :
+          <>
+            {page === 'main' ? null : page === 'rules' ? null :
+              <>
+                <div className="my-4 bg-red text-white px-4 py-2 rounded-full absolute top-2 right-0 left-0 mx-auto w-fit">Баллы {points}</div>
+              </>
+            }
+            {
+              page === 'result' || page === 'rules' ?
+                <Button
+                  classes='absolute top-2 left-2 text-blue bg-lightBlue rounded-lg p-2 z-30'
+                  text={`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" class="w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" /></svg>`}
+                  onClick={() => setPage('main')} /> : null
+            }
+            {
+              page === 'task' || page === 'propose' ?
+                <Button
+                  classes='absolute top-2 left-2 text-blue bg-lightBlue rounded-lg p-2 z-30'
+                  text={`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" class="w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" /></svg>`}
+                  onClick={() => setPage('result')} /> : null
+            }
+
+            {page === 'main' ? <Main setPage={vk_id ? setPage : console.log()} generateImg={generateImg} />
+              : page === 'cardgen' ?
+                <CardGeneration
+                  setPage={setPage}
+                  setReciever={setReciever}
+                  setMatter={setMatter}
+                  prepareImage={prepareImage}
+                  setGreeting={setGreeting} />
+                : page === 'result' ?
+                  <Result
+                    greeting={greeting}
                     setPage={setPage}
+                    reciever={reciever}
+                    matter={matter}
                     vk_id={vk_id}
-                    setPoints={setPoints}
-                    points={points}
                     setLoading={setLoading}
                     showMessage={showMessage}
-                    showMessageAdditional={showMessageAdditional} /> : null}
-      {loading ? <Loader loading={loading} /> : null}
-      {messageWin ?
-        <Message
-          message={messageWin}
-          showMessage={showMessage}
-          showMessageAdditional={showMessageAdditional}
-          messageAdditional={messageAdditional} /> : null}
+                    showMessageAdditional={showMessageAdditional}
+                    setPoints={setPoints}
+                    points={points}
+                    limit={limit}
+                    card_url={card_url}
+                    setBigCard={setBigCard}
+                    zoomedCard={zoomedCard}
+                  /> :
+                  page === 'task' ?
+                    <Task vk_id={vk_id}
+                      setLoading={setLoading}
+                      setPoints={setPoints}
+                      messageWin={messageWin}
+                      showMessage={showMessage}
+                      setPage={setPage}
+                      points={points}
+                      showMessageAdditional={showMessageAdditional} /> :
+                    page === 'rules' ?
+                      <Rules setPage={setPage} /> :
+                      page === 'propose' ?
+                        <MyPropose
+                          setPage={setPage}
+                          vk_id={vk_id}
+                          setPoints={setPoints}
+                          points={points}
+                          setLoading={setLoading}
+                          showMessage={showMessage}
+                          showMessageAdditional={showMessageAdditional} /> : null}
+            {loading ? <Loader loading={loading} /> : null}
+            {messageWin ?
+              <Message
+                message={messageWin}
+                showMessage={showMessage}
+                showMessageAdditional={showMessageAdditional}
+                messageAdditional={messageAdditional} /> : null}
+          </>
+        }
+
+      </>
     </div>
   );
 }

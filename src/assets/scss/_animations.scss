@@ -65,7 +65,7 @@
         }
         .final-pic {
             position: fixed;
-            zoom: 1.5;
+            transform: scale(1.5);
             z-index: 300;
             margin: auto;
             left: 0;
@@ -75,7 +75,7 @@
             height: fit-content;
             box-shadow: 5px 4px 10px #bcb2b2;
             @media screen and (max-width: 760px) {
-                zoom: 1.2;
+                transform: scale(1.2);
             }
         }
     }

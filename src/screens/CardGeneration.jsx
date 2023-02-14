@@ -63,9 +63,7 @@ const CardGeneration = ({ setPage, setReciever, setMatter, prepareImage }) => {
         else {
             setCardProps(item.prop);
             prepareImage(item.prop);
-            setTimeout(() => {
-                setPage('result')
-            }, 800);
+           
         }
     }
 

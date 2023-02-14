@@ -25,7 +25,7 @@ export const steps = [
     },
     {
         id: 2,
-        header: '<span class="text-white text-center">В каком направлении вы бы<br class="hidden sm:block" />хотели проявить заботу?</span>',
+        header: '<span class="text-white text-center">В каком направлении вы бы <br class="hidden sm:block" />хотели проявить заботу?</span>',
         extraClasses: 'blue-bg round overflow-hidden main',
         btns: [
             { name: 'Путешествия', img: card5, prop: 'trip' },

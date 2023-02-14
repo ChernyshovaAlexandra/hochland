@@ -11,11 +11,12 @@ import ArrDown from '../assets/images/arrow-d.png'
 import API from "../utils/API";
 import Loader from "../components/Loader";
 import FinalCard from "../components/FinalCard";
+import img from '../assets/images/576.jpg'
+import { finalUrl, vk_link } from "../constants/link";
 
 
 
-
-const Result = ({ setPage, reciever, vk_id, greeting, setLoading, showMessage, showMessageAdditional, setPoints, points }) => {
+const Result = ({ setPage, reciever, vk_id, greeting, setLoading, showMessage, showMessageAdditional, setPoints, points, card_url, limit }) => {
 
     let mobile = window.innerWidth < 740
     useEffect(() => {
@@ -24,7 +25,7 @@ const Result = ({ setPage, reciever, vk_id, greeting, setLoading, showMessage, s
     const send = () => {
         if (mobile) {
             bridge.send('VKWebAppShare', {
-                link: 'https://vk.com/vkappsdev'
+                link: finalUrl(card_url, color)
             })
                 .then((data) => {
                     setLoading('Спасибо за активность! Проверяем задание');
@@ -32,15 +33,15 @@ const Result = ({ setPage, reciever, vk_id, greeting, setLoading, showMessage, s
                     if (data.result) {
                         setLoading(false)
                         API.post('/share/private', { vk_id: vk_id })
-                            .then(res => {
-                                if (res.data.success) {
-                                    if (res.data.limit) {
+                            .then(response => {
+                                if (response.data.success) {
+                                    if (response.data.limit) {
                                         showMessage('Спасибо за вашу активность!')
                                         showMessageAdditional('Вы уже получили баллы за выполнение этого задания😊')
                                     }
                                     else {
                                         showMessage('Ура! Мы начислили вам баллы')
-                                        showMessageAdditional(`Вы заработали ${res.data.points - points} баллов`);
+                                        showMessageAdditional(`Вы заработали ${response.data.points - points} баллов`);
                                     }
                                 }
                                 else {
@@ -62,9 +63,9 @@ const Result = ({ setPage, reciever, vk_id, greeting, setLoading, showMessage, s
         } else {
             document.getElementsByClassName('vk-share')[0].append(
                 window.VK.Share.button({
-                    url: `https://hochland.ravdel.ru/image/1?color=2&type=3`,
-                    title: { greeting },
-                    image: 'https://bali.top/storage/images/Post/100/img-0766.jpeg',
+                    url: finalUrl(card_url, color),
+                    title: `Лучший подарок - это забота! ${greeting}`,
+                    image: finalUrl(card_url, color),
                     noparse: true
                 }))
             window.VK.Share.click(0, this)
@@ -97,11 +98,14 @@ const Result = ({ setPage, reciever, vk_id, greeting, setLoading, showMessage, s
 
     }
     const shareOnTheWall = () => {
+        console.log(finalUrl(card_url, color))
         const process = mobile ? 'VKWebAppShowWallPostBox' : 'VKWebAppShare';
         let attachments = mobile ? {
-            message: 'Hello!',
-            attachments: 'https://habr.com'
-        } : { link: 'https://vk.com/vkappsdev' };
+            message: `Лучший подарок - это забота! ${greeting}`,
+            attachments: finalUrl(card_url, color)
+        } : {
+            link: finalUrl(card_url, color)
+        };
 
 
         bridge.send(process, attachments)
@@ -156,24 +160,32 @@ const Result = ({ setPage, reciever, vk_id, greeting, setLoading, showMessage, s
     ];
     const [index, setInd] = useState(0);
     const [color, setColor] = useState(colors[index].col);
-    const [bg, setBg] = useState(colors[index].arc)
-
+    const [bg, setBg] = useState(colors[index].arc);
+    const [zoomedCard, setBigCard] = useState(false)
+    const zoom = (action) => {
+        setBigCard(action)
+    }
     return (
         <main className="blue-bg min-[766px]:px-8 px-4 pb-6 min-[766px]:pb-8 pt-20 main">
             <div className="flex gap-4 flex-wrap">
                 <div className="flex-auto min-[766px]:w-32 w-full relative">
                     <Header text={'<span class="text-white">Сердечное поздравление готово!</span>'}
                         size="text-3xl font-white text-left" />
-                    <p className="mt-4 text-white moris ">
-                        Вы заработали <span className="text-yellow">10 баллов </span><br />
-                        и можете увеличить<br /> свои баллы.
-
-                    </p>
-                    <div className="absolute arrow-d left-6 mx-auto bottom-8 w-fit sm:block hidden">
+                    {limit ?
+                        <p className="mt-4 text-white moris ">
+                            Делитесь заботой с близкими и участвуйте в розыгрыше призов
+                        </p>
+                        :
+                        <p className="mt-4 text-white moris ">
+                            Вы заработали <span className="text-yellow">10 баллов </span><br />
+                            и можете увеличить<br /> свои баллы.
+                        </p>
+                    }
+                    <div className="absolute arrow-d left-6 mx-auto bottom-8 w-fit sm:block hidden" style={{ maxWidth: '85%' }}>
                         <img src={ArrDown} />
                     </div>
                 </div>
-                <FinalCard bg={bg} color={color} reciever={reciever} greeting={greeting} colors={colors} setInd={setInd} index={index} setColor={setColor} setBg={setBg} />
+                <FinalCard zoomedCard={zoomedCard} bigCard={false} zoom={zoom} bg={bg} color={color} reciever={reciever} greeting={greeting} colors={colors} setInd={setInd} index={index} setColor={setColor} setBg={setBg} />
             </div>
 
 
@@ -184,16 +196,14 @@ const Result = ({ setPage, reciever, vk_id, greeting, setLoading, showMessage, s
                     <p className="text-reg text-sm -mt-3"> Отправьте поздравление в личных сообщениях или сделайте репост, чтобы увеличить баллы  </p>
                     <Button onClick={() => {
                         send()
-                        // prepareImage("message")
                     }} classes="bg-yellow rounded-full p-3 w-full text-center font-bold text-sm mt-4" text="Поделиться в ЛС | +10" />
                     <Button onClick={() => {
                         shareOnTheWall()
-                        //prepareImage("wall")
                     }} classes="bg-yellow rounded-full p-3 w-full text-center font-bold text-sm mt-2" text="Сделать репост | +10" />
                 </div>
                 <div className="rounded-lg text-center p-4 flex flex-col justify-between text-blue bg-lightGreen hover:scale-105 transition ease-in-out duration-300 cursor-pointer">
                     <Header text="Прояви заботу" size={'text-xl'} />
-                    <p className="text-reg text-sm -mt-3">Выполните задание на карточке, опубликуйте фото с хэштегом #сЫрдечнопоздравляю
+                    <p className="text-reg text-sm -mt-3">Выполните задание на карточке, опубликуйте фото с хэштегом #сердечнопоздравляю
                         и получите 100 баллов</p>
                     <Button onClick={() => { setPage('task') }} classes="bg-blue text-white rounded-full p-3 w-full text-center font-bold text-sm mt-4" text="Участвовать | +100" />
                 </div>
@@ -204,6 +214,15 @@ const Result = ({ setPage, reciever, vk_id, greeting, setLoading, showMessage, s
                 </div>
                 <div className="hidden vk-share"></div>
             </div>
+            {zoomedCard ?
+                <div className="loader z-40 fin"  onClick={() => { zoom(false); }}>
+                    <div className="cancel-b absolute top-16 right-24 text-blue cursor-pointer bg-blue-100 rounded-lg hover:bg-blue-200" onClick={() => { zoom(false); }}>
+                        <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </div>
+                    <FinalCard zoomedCard={zoomedCard} bigCard={true} zoom={zoom} bg={bg} color={color} reciever={reciever} greeting={greeting} colors={colors} setInd={setInd} index={index} setColor={setColor} setBg={setBg} />
+                </div> : false}
         </main >
     )
 }

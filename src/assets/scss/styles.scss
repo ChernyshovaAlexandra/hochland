@@ -55,6 +55,11 @@ $red: #e60004;
         height: 780px;
     }
 }
+.main-text {
+    @media screen and (max-width: 760px) {
+        height: 100vh;
+    }
+}
 .final-pic {
     @media screen and (max-width: 760px) {
         flex: 80%;
@@ -286,7 +291,7 @@ h1 {
     }
     &-yellow {
         color: $yellow;
-        &-res{
+        &-res {
             color: #ff6b00;
         }
     }
@@ -298,7 +303,7 @@ h1 {
     }
     &-red {
         color: red;
-        &-res{
+        &-res {
             color: #b20003;
         }
     }
@@ -310,7 +315,7 @@ h1 {
     }
     &-green {
         color: $green;
-        &-res{
+        &-res {
             color: #006930;
         }
     }
@@ -376,8 +381,15 @@ h1 {
     }
 }
 .mainPic {
-    @media screen and (max-width: 375px) {
-        width: 40%;
+    @media screen and (max-width: 760px) {
+        height: auto;
+        position: absolute;
+        bottom: 0;
+        width: 74vw;
+        margin: 0;
+    }
+    @media screen and (max-height: 668px) {
+        width: 60vw;
     }
 }
 .border {

@@ -15,7 +15,7 @@ const images = {
     lover: img4
 }
 
-const FinalCard = ({ bg, color, reciever, greeting, colors, setInd, index, setColor, setBg }) => {
+const FinalCard = ({ bg, color, reciever, greeting, colors, setInd, index, setColor, setBg, zoom, bigCard }) => {
 
     const arrTop = () => {
         if (index - 1 === -1) {
@@ -40,10 +40,12 @@ const FinalCard = ({ bg, color, reciever, greeting, colors, setInd, index, setCo
             setInd(index + 1);
         }
     }
+
     return (
         <>
-            <div className="min-[766px]:w-72 final-pic">
+            <div className="min-[766px]:w-72 final-pic cursor-pointer" onClick={() => zoom(true)}>
                 <div className="bg-white border-4 with-logo border-white rounded-lg overflow-hidden w-full text-center relative">
+
                     <div className={`image-frame bg-${color}-res relative w-full h-64 -mt-6`}>
                         <img src={bg} className='absolute mx-auto bottom-0 w-11/12 left-0 right-0 ' alt="" />
                         <img src={images[reciever]} alt="" className="absolute mx-auto bottom-0 w-10/12 left-0 right-0" />
@@ -61,25 +63,27 @@ const FinalCard = ({ bg, color, reciever, greeting, colors, setInd, index, setCo
                     </div>
                 </div>
             </div>
-            <div className="min-[766px]:w-16 self-center">
-                <div className="bg-white rounded-xl p-4 grid gap-y-3 h-fit place-items-center mb-4 arr cursor-pointer" onClick={arrTop}>
-                    <img className="min-[766px]:w-6 w-4 min-[766px]:h-6 h-4 object-content object-center " src={ArrT} alt="" />
-                </div>
-                <div className="bg-white rounded-xl p-4 grid gap-y-3 h-fit place-items-center">
-                    {
-                        colors.map((col, id) => (
-                            <div
-                                key={id}
-                                onClick={() => { setColor(col.col); setInd(id); setBg(col.arc) }}
-                                className={`rounded-full w-6 mx-auto cursor-pointer h-6 bg-${col.col}-dot ${color === col.col ? 'active' : ''}`}></div>
-                        ))
-                    }
+            {bigCard ? null :
+                <div className="min-[766px]:w-16 self-center">
+                    <div className="bg-white rounded-xl p-4 grid gap-y-3 h-fit place-items-center mb-4 arr cursor-pointer" onClick={arrTop}>
+                        <img className="min-[766px]:w-6 w-4 min-[766px]:h-6 h-4 object-content object-center " src={ArrT} alt="" />
+                    </div>
+                    <div className="bg-white rounded-xl p-4 grid gap-y-3 h-fit place-items-center">
+                        {
+                            colors.map((col, id) => (
+                                <div
+                                    key={id}
+                                    onClick={() => { setColor(col.col); setInd(id); setBg(col.arc) }}
+                                    className={`rounded-full w-6 mx-auto cursor-pointer h-6 bg-${col.col}-dot ${color === col.col ? 'active' : ''}`}></div>
+                            ))
+                        }
 
-                </div>
-                <div className="bg-white rounded-xl p-4 grid gap-y-3 h-fit place-items-center mt-4 arr cursor-pointer" onClick={arrDown}>
-                    <img className="min-[766px]:w-6 w-4 min-[766px]:h-6 h-4 object-content object-center " src={ArrB} alt="" />
-                </div>
-            </div></>
+                    </div>
+                    <div className="bg-white rounded-xl p-4 grid gap-y-3 h-fit place-items-center mt-4 arr cursor-pointer" onClick={arrDown}>
+                        <img className="min-[766px]:w-6 w-4 min-[766px]:h-6 h-4 object-content object-center " src={ArrB} alt="" />
+                    </div>
+                </div>}
+        </>
     )
 }
 

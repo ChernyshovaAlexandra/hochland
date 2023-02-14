@@ -4,6 +4,9 @@ import share from '../assets/images/share.png'
 import publicate from '../assets/images/publicate.png'
 import Button from "../components/Button";
 import API from "../utils/API";
+import img1 from '../assets/images/ozon_img.png'
+import img2 from '../assets/images/toster_img.png'
+import img3 from '../assets/images/yandex_img.png'
 
 
 const Task = ({ vk_id, setLoading, setPoints, showMessage, showMessageAdditional, setPage, points }) => {
@@ -52,6 +55,11 @@ const Task = ({ vk_id, setLoading, setPoints, showMessage, showMessageAdditional
                     </div>
                     <div className="min-[766px]:p-8 p-5 h-44 bg-lightBlue rounded-lg font-bold text-blue text-reg mt-4">
                         <p>Получи 100 баллов<br />и участвуй в розыгрыше призов</p>
+                        <div className="mt-4 grid grid-cols-3 gap-1 w-7/12">
+                            <img className="w-16 h-16" src={img1} alt="" />
+                            <img className="w-16 h-16" src={img2} alt="" />
+                            <img className="w-16 h-16" src={img3} alt="" />
+                        </div>
                     </div>
                     <Button
                         text={'Готово!'}

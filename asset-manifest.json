@@ -1,9 +1,10 @@
 {
   "files": {
-    "main.css": "/static/css/main.b0820068.css",
-    "main.js": "/static/js/main.e8f1a859.js",
+    "main.css": "/static/css/main.1b68755a.css",
+    "main.js": "/static/js/main.802efa9a.js",
     "static/js/787.1bc118ff.chunk.js": "/static/js/787.1bc118ff.chunk.js",
     "static/media/576.jpg": "/static/media/576.6090682cc0aeea9a48f3.jpg",
+    "static/media/baloon-res.png": "/static/media/baloon-res.4823cd4d97d9d9cbf66f.png",
     "static/media/pic-bg.jpeg": "/static/media/pic-bg.3555f55ed2c534bf4a6d.jpeg",
     "static/media/MorrisModernC.otf": "/static/media/MorrisModernC.50927a15b96ce6b3d653.otf",
     "static/media/card8.png": "/static/media/card8.df08c5ed151f8c92a080.png",
@@ -20,12 +21,12 @@
     "static/media/Arc-green.svg": "/static/media/Arc-green.f47c9da88c99f214393e4f809d947802.svg",
     "static/media/arrT.svg": "/static/media/arrT.d6f52f5e08581eaf6e1cf3e43d96518c.svg",
     "static/media/arrB.svg": "/static/media/arrB.c7b04d9add51fe975ac50fb51b0b860f.svg",
-    "main.b0820068.css.map": "/static/css/main.b0820068.css.map",
-    "main.e8f1a859.js.map": "/static/js/main.e8f1a859.js.map",
+    "main.1b68755a.css.map": "/static/css/main.1b68755a.css.map",
+    "main.802efa9a.js.map": "/static/js/main.802efa9a.js.map",
     "787.1bc118ff.chunk.js.map": "/static/js/787.1bc118ff.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.b0820068.css",
-    "static/js/main.e8f1a859.js"
+    "static/css/main.1b68755a.css",
+    "static/js/main.802efa9a.js"
   ]
 }

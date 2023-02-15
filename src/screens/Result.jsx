@@ -24,7 +24,8 @@ const Result = ({ setPage, reciever, vk_id, greeting, setLoading, showMessage, s
     }, [])
     const send = () => {
         let finLink = finalUrl(card_url, color)
-
+        console.log(finLink, greeting)
+        console.log(window.VK.Share)
 
         if (mobile) {
             bridge.send('VKWebAppShare', {
@@ -65,6 +66,7 @@ const Result = ({ setPage, reciever, vk_id, greeting, setLoading, showMessage, s
                     console.log(error);
                 });
         } else {
+
             document.getElementsByClassName('vk-share')[0].append(
                 window.VK.Share.button({
                     url: finLink,
@@ -76,6 +78,9 @@ const Result = ({ setPage, reciever, vk_id, greeting, setLoading, showMessage, s
             setTimeout(() => {
                 API.post('/share/private', { vk_id: vk_id })
                     .then(res => {
+
+                        window.VK.Share._popups = [];
+                        window.VK.Share._gens = [];
                         if (res.data.success) {
                             if (res.data.limit) {
                                 showMessage('Спасибо за активность!')
@@ -93,6 +98,9 @@ const Result = ({ setPage, reciever, vk_id, greeting, setLoading, showMessage, s
                         }
                     })
                     .catch(err => {
+
+                        window.VK.Share._popups = [];
+                        window.VK.Share._gens = [];
                         showMessage('Что-то пошло не так');
                         showMessageAdditional('Нам не удолось проверить отправку сообщения. Возможно, это ошибка сервера. Мы уже работаем над этим')
                     })
@@ -103,14 +111,12 @@ const Result = ({ setPage, reciever, vk_id, greeting, setLoading, showMessage, s
     }
     const shareOnTheWall = () => {
         let finLink = finalUrl(card_url, color)
-
-        const process = mobile ? 'VKWebAppShowWallPostBox' : 'VKWebAppShare';
-        let attachments = mobile ? {
+        console.log(finLink, greeting)
+        const process = 'VKWebAppShowWallPostBox'
+        let attachments = {
             message: `Лучший подарок - это забота! ${greeting}`,
             attachments: finLink
-        } : {
-            link: finLink
-        };
+        }
 
 
         bridge.send(process, attachments)
@@ -148,12 +154,7 @@ const Result = ({ setPage, reciever, vk_id, greeting, setLoading, showMessage, s
                     showMessage('Что-то пошло не так');
                     showMessageAdditional('Возможно, это ошибка сервера. Мы уже работаем над этим')
                 }
-            })
-            .catch((error) => {
-                // Ошибка
-                console.log(error);
             });
-
     }
 
 

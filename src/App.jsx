@@ -36,7 +36,6 @@ const App = () => {
 
 
 
-
   const vkLogin = () => {
     bridge.subscribe((e) => {
       if (e.detail.type === "VKWebAppGetUserInfoResult") {

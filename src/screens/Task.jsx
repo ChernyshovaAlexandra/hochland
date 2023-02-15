@@ -61,10 +61,16 @@ const Task = ({ vk_id, setLoading, setPoints, showMessage, showMessageAdditional
                             <img className="w-16 h-16" src={img3} alt="" />
                         </div>
                     </div>
+                    <div className="flex gap-4 justify-center flex-wrap w-fit mx-auto">
                     <Button
                         text={'Выполнить задание!'}
                         classes="bg-yellow rounded-full py-3 px-12 mx-auto block w-fit text-center font-bold text-sm mt-4"
                         onClick={() => { checkTask() }} />
+                    <Button
+                        text={'Назад'}
+                        classes="bg-gray-200 hover:bg-gray-400 rounded-full py-3 px-12 mx-auto block w-fit text-center font-bold text-sm mt-4"
+                        onClick={() => { setPage('result') }} />
+                    </div>
                 </div>
             </div>
 

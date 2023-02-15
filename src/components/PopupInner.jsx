@@ -38,14 +38,14 @@ const PopupInner = ({ setPage }) => {
                         <p className="block -mt-2">Если вы набрали от 50 баллов:</p>
                         <div className="my-2 rounded-lg bg-white p-3">
                             <div className="flex gap-4 font-bold">
-                                <img src={img5} alt="" srcset="" />
+                                <img src={img5} alt="" srcSet="" />
                                 <p>50 сертификатов OZON номиналом <span className="text-red">500 рублей</span></p>
                             </div>
                         </div>
                         <p>Если вы набрали от 100 баллов:</p>
                         <div className="my-2 rounded-lg bg-white p-3">
                             <div className="flex gap-4 font-bold">
-                                <img src={img6} alt="" srcset="" />
+                                <img src={img6} alt="" srcSet="" />
                                 <p>3 тостера в неделю</p>
                             </div>
                         </div>
@@ -54,14 +54,14 @@ const PopupInner = ({ setPage }) => {
                         <p  className="block -mt-2">Если вы набрали от 100 баллов:</p>
                         <div className="my-2 rounded-lg bg-white p-3">
                             <div className="flex gap-4 font-bold">
-                                <img src={img5} alt="" srcset="" />
+                                <img src={img5} alt="" srcSet="" />
                                 <p>50 сертификатов OZON номиналом <span className="text-red">1000 рублей</span></p>
                             </div>
                         </div>
                         <p>Среди 30% пользователей с наибольшим количество баллов:</p>
                         <div className="my-2 rounded-lg bg-white p-3">
                             <div className="flex gap-4 font-bold">
-                                <img src={img4} alt="" srcset="" />
+                                <img src={img4} alt="" srcSet="" />
                                 <p>5 Яндекс станций мини</p>
                             </div>
                         </div>

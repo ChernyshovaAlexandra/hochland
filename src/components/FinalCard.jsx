@@ -43,7 +43,7 @@ const FinalCard = ({ bg, color, reciever, greeting, colors, setInd, index, setCo
 
     return (
         <>
-            <div className="min-[766px]:w-80 final-pic cursor-pointer card-style" onClick={() => zoom(true)}>
+            <div className="min-[766px]:w-80 final-pic cursor-pointer card-style -mt-2" onClick={() => zoom(true)}>
                 <div className="bg-white border-4 with-logo border-white rounded-lg overflow-hidden w-full text-center relative">
 
                     <div className={`image-frame bg-${color}-res relative w-full h-64 -mt-6`}>
@@ -54,11 +54,11 @@ const FinalCard = ({ bg, color, reciever, greeting, colors, setInd, index, setCo
                     </div>
                     <div className="mt-8">
                         <span className="text-blue mx-auto">
-                            <span className="moris font-bold py-3">
+                            <span className="moris font-bold py-2">
                                 Лучший подарок - <span className={`text-${color}-res`}>это забота!</span><br />
                                 а забота с Hochland это…<br />
                             </span>
-                            {greeting ? <div className="font-bold mt-2 text-xs pb-3">{greeting}</div> : null}
+                            {greeting ? <p className="font-bold mt-2 text-xs pb-1">{greeting}</p> : null}
                         </span>
                     </div>
                 </div>

@@ -66,7 +66,6 @@ const Result = ({ setPage, reciever, vk_id, greeting, setLoading, showMessage, s
                     console.log(error);
                 });
         } else {
-
             document.getElementsByClassName('vk-share')[0].append(
                 window.VK.Share.button({
                     url: finLink,
@@ -109,6 +108,8 @@ const Result = ({ setPage, reciever, vk_id, greeting, setLoading, showMessage, s
         }
 
     }
+
+
     const shareOnTheWall = () => {
         let finLink = finalUrl(card_url, color)
         console.log(finLink, greeting)
@@ -118,12 +119,10 @@ const Result = ({ setPage, reciever, vk_id, greeting, setLoading, showMessage, s
             attachments: finLink
         }
 
-
         bridge.send(process, attachments)
             .then((data) => {
                 setLoading('Спасибо за активность! Проверяем репост');
-                let checkObj = mobile ? data.post_id : data.result
-                if (checkObj) {
+                if (data.post_id) {
                     setLoading(false)
                     API.post('/share/public', { vk_id: vk_id })
                         .then(response => {
@@ -187,7 +186,7 @@ const Result = ({ setPage, reciever, vk_id, greeting, setLoading, showMessage, s
                             и можете увеличить<br /> свои баллы.
                         </p>
                     }
-                    <div className="absolute arrow-d left-6 mx-auto bottom-8 w-fit sm:block hidden" style={{ maxWidth: '85%' }}>
+                    <div className="absolute arrow-d left-6 mx-auto bottom-0 w-fit sm:block hidden" style={{ maxWidth: '75%' }}>
                         <img src={ArrDown} />
                     </div>
                 </div>

@@ -32,8 +32,46 @@ const App = () => {
   const [greeting, setGreeting] = useState('...это порадовать родителей после работы домашними бургерами с плавленым сыром Hochland')
   const [hash, setHash] = useState('')
   const [zoomedCard, setBigCard] = useState(false)
+  const [notification, sendNotification] = useState(false)
+  const [showAgain, sendNotificationAgain] = useState(true)
+
+  const allowNotifications = () => {
+    showMessage(false);
+    showMessageAdditional(false)
+    bridge.send('VKWebAppAllowNotifications')
+      .then((data) => {
+        if (data.result) {
+          sendNotificationAgain(false)
+
+        } else {
+          // Ошибка
+        }
+      })
+      .catch((error) => {
+        // Ошибка
+        console.log(error);
+      });
+  }
 
 
+  useEffect(() => {
+    bridge.send('VKWebAppCheckAllowedScopes', { scopes: 'notify' })
+      .then((data) => {
+        if (data.result) {
+          sendNotificationAgain(false)
+        }
+      }).catch(error => {
+        sendNotificationAgain(false)
+      })
+
+    if (points >= 50 && showAgain) {
+      sendNotification(true)
+      showMessage('Отлично, вы набрали 50 баллов за неделю')
+      showMessageAdditional(` и участвуете в розыгрыше сертификатов OZON номиналом 500 рублей! 
+      Наберите 100 баллов и участвуйте в розыгрыше тостеров и сертификатов OZON номиналом 1000 рублей.
+      В случае победы мы свяжемся с вами в личных сообщения`)
+    }
+  }, [points])
 
 
   const vkLogin = () => {
@@ -215,6 +253,8 @@ const App = () => {
             {loading ? <Loader loading={loading} /> : null}
             {messageWin ?
               <Message
+                onClick={allowNotifications}
+                button={notification}
                 message={messageWin}
                 showMessage={showMessage}
                 showMessageAdditional={showMessageAdditional}

@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "./Button";
 import Header from "./Header";
 
 
@@ -15,7 +16,7 @@ const Loader = ({ loading, }) => {
         </div>
     )
 }
-export const Message = ({ message, messageAdditional, showMessage, showMessageAdditional }) => {
+export const Message = ({ message, messageAdditional, showMessage, showMessageAdditional, button, onClick }) => {
     return (
         <div className="loader z-40">
             <div className="grid gap-4 items-center relative w-10/12 ">
@@ -26,7 +27,10 @@ export const Message = ({ message, messageAdditional, showMessage, showMessageAd
                 </div>
                 <div className="bg-white rounded-lg p-6 text-center pt-16 border-2 border-blue">
                     <Header text={message} size="text-blue text-2xl mb-4 text-center" />
-                    <p>{messageAdditional}</p>
+                    <p className={`${button ? 'mb-4' : ''}`}>{messageAdditional}</p>
+                    {button ? <Button
+                        onClick={onClick}
+                        text='Разрешить отправлять сообщения' /> : null}
                 </div>
             </div>
 

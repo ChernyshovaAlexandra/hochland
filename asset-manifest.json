@@ -1,10 +1,10 @@
 {
   "files": {
     "main.css": "/static/css/main.1b06e838.css",
-    "main.js": "/static/js/main.a0ab1063.js",
+    "main.js": "/static/js/main.a78aac3b.js",
     "static/js/787.1bc118ff.chunk.js": "/static/js/787.1bc118ff.chunk.js",
+    "static/media/Full_rules.pdf": "/static/media/Full_rules.c2949d84477f2ab9c60e.pdf",
     "static/media/576.jpg": "/static/media/576.6090682cc0aeea9a48f3.jpg",
-    "static/media/Full_rules.pdf": "/static/media/Full_rules.cb1500f366fb20697e89.pdf",
     "static/media/baloon-res.png": "/static/media/baloon-res.4823cd4d97d9d9cbf66f.png",
     "static/media/pic-bg.jpeg": "/static/media/pic-bg.3555f55ed2c534bf4a6d.jpeg",
     "static/media/MorrisModernC.otf": "/static/media/MorrisModernC.50927a15b96ce6b3d653.otf",
@@ -23,11 +23,11 @@
     "static/media/arrT.svg": "/static/media/arrT.d6f52f5e08581eaf6e1cf3e43d96518c.svg",
     "static/media/arrB.svg": "/static/media/arrB.c7b04d9add51fe975ac50fb51b0b860f.svg",
     "main.1b06e838.css.map": "/static/css/main.1b06e838.css.map",
-    "main.a0ab1063.js.map": "/static/js/main.a0ab1063.js.map",
+    "main.a78aac3b.js.map": "/static/js/main.a78aac3b.js.map",
     "787.1bc118ff.chunk.js.map": "/static/js/787.1bc118ff.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.1b06e838.css",
-    "static/js/main.a0ab1063.js"
+    "static/js/main.a78aac3b.js"
   ]
 }

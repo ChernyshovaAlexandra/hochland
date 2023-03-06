@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.1b06e838.css",
-    "main.js": "/static/js/main.67b08a5b.js",
+    "main.js": "/static/js/main.e4e81f86.js",
     "static/js/787.1bc118ff.chunk.js": "/static/js/787.1bc118ff.chunk.js",
     "static/media/Rules.pdf": "/static/media/Rules.1f92f8167dba4ecb2a32.pdf",
     "static/media/576.jpg": "/static/media/576.6090682cc0aeea9a48f3.jpg",
@@ -23,11 +23,11 @@
     "static/media/arrT.svg": "/static/media/arrT.d6f52f5e08581eaf6e1cf3e43d96518c.svg",
     "static/media/arrB.svg": "/static/media/arrB.c7b04d9add51fe975ac50fb51b0b860f.svg",
     "main.1b06e838.css.map": "/static/css/main.1b06e838.css.map",
-    "main.67b08a5b.js.map": "/static/js/main.67b08a5b.js.map",
+    "main.e4e81f86.js.map": "/static/js/main.e4e81f86.js.map",
     "787.1bc118ff.chunk.js.map": "/static/js/787.1bc118ff.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.1b06e838.css",
-    "static/js/main.67b08a5b.js"
+    "static/js/main.e4e81f86.js"
   ]
 }

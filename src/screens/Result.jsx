@@ -214,7 +214,7 @@ const Result = ({ setPage, reciever, vk_id, greeting, setLoading, showMessage, s
                 </div>
                 <div className="rounded-lg text-center p-4 flex flex-col justify-between text-blue bg-white hover:scale-105 transition ease-in-out duration-300 cursor-pointer">
                     <Header text="Предложите свой<br/>вариант карточки" size={'text-xl'} />
-                    <p className="text-reg text-sm -mt-3">Напишите свой текст поздравления и заработайте 150 баллов</p>
+                    <p className="text-reg text-sm -mt-3">Напишите свой текст поздравления и заработайте 30 баллов</p>
                     <Button onClick={() => { setPage('propose') }} classes="bg-yellow rounded-full p-3 w-full text-center font-bold text-sm mt-4" text="Предложить | +30" />
                 </div>
                 <div className="hidden vk-share"></div>

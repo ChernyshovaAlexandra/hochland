@@ -12,6 +12,7 @@ import Header from "./components/Header";
 import Loader, { Message } from "./components/Loader";
 import Rules from "./screens/Rules";
 import CardReady from "./screens/CardReady";
+import Winners from "./screens/Winners";
 
 
 
@@ -33,7 +34,7 @@ const App = () => {
   const [hash, setHash] = useState('')
   const [zoomedCard, setBigCard] = useState(false)
   const [notification, sendNotification] = useState(false)
-  const [showAgain, sendNotificationAgain] = useState(true)
+  const [showAgain, sendNotificationAgain] = useState(localStorage.getItem('allow_vk'))
 
   const allowNotifications = () => {
     showMessage(false);
@@ -55,17 +56,11 @@ const App = () => {
 
 
   useEffect(() => {
-    bridge.send('VKWebAppCheckAllowedScopes', { scopes: 'notify' })
-      .then((data) => {
-        if (data.result) {
-          sendNotificationAgain(false)
-        }
-      }).catch(error => {
-        sendNotificationAgain(false)
-      })
+    
 
-    if (points >= 50 && showAgain) {
-      sendNotification(true)
+    if (points >= 50 && !showAgain) {
+      sendNotification(true);
+      localStorage.setItem('allow_vk', true)
       showMessage('Отлично, вы набрали 50 баллов за неделю')
       showMessageAdditional(` и участвуете в розыгрыше сертификатов OZON номиналом 500 рублей! 
       Наберите 100 баллов и участвуйте в розыгрыше тостеров и сертификатов OZON номиналом 1000 рублей.
@@ -191,7 +186,7 @@ const App = () => {
               </>
             }
             {
-              page === 'result' || page === 'rules' ?
+              page === 'result' || page === 'rules' || page === 'Winners' ?
                 <Button
                   classes='absolute top-2 left-2 text-blue bg-lightBlue rounded-lg p-2 z-30'
                   text={`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" class="w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" /></svg>`}
@@ -205,51 +200,54 @@ const App = () => {
                   onClick={() => setPage('result')} /> : null
             }
 
-            {page === 'main' ? <Main setPage={vk_id ? setPage : console.log()} generateImg={generateImg} />
-              : page === 'cardgen' ?
-                <CardGeneration
-                  setPage={setPage}
-                  setReciever={setReciever}
-                  setMatter={setMatter}
-                  prepareImage={prepareImage}
-                  setGreeting={setGreeting} />
-                : page === 'result' ?
-                  <Result
-                    greeting={greeting}
+            {page === 'main' ?
+              <Main setPage={setPage} generateImg={generateImg} />
+              : page === 'Winners' ?
+                <Winners />
+                : page === 'cardgen' ?
+                  <CardGeneration
                     setPage={setPage}
-                    reciever={reciever}
-                    matter={matter}
-                    vk_id={vk_id}
-                    setLoading={setLoading}
-                    showMessage={showMessage}
-                    showMessageAdditional={showMessageAdditional}
-                    setPoints={setPoints}
-                    points={points}
-                    limit={limit}
-                    card_url={card_url}
-                    setBigCard={setBigCard}
-                    zoomedCard={zoomedCard}
-                  /> :
-                  page === 'task' ?
-                    <Task vk_id={vk_id}
-                      setLoading={setLoading}
-                      setPoints={setPoints}
-                      messageWin={messageWin}
-                      showMessage={showMessage}
+                    setReciever={setReciever}
+                    setMatter={setMatter}
+                    prepareImage={prepareImage}
+                    setGreeting={setGreeting} />
+                  : page === 'result' ?
+                    <Result
+                      greeting={greeting}
                       setPage={setPage}
+                      reciever={reciever}
+                      matter={matter}
+                      vk_id={vk_id}
+                      setLoading={setLoading}
+                      showMessage={showMessage}
+                      showMessageAdditional={showMessageAdditional}
+                      setPoints={setPoints}
                       points={points}
-                      showMessageAdditional={showMessageAdditional} /> :
-                    page === 'rules' ?
-                      <Rules setPage={setPage} /> :
-                      page === 'propose' ?
-                        <MyPropose
-                          setPage={setPage}
-                          vk_id={vk_id}
-                          setPoints={setPoints}
-                          points={points}
-                          setLoading={setLoading}
-                          showMessage={showMessage}
-                          showMessageAdditional={showMessageAdditional} /> : null}
+                      limit={limit}
+                      card_url={card_url}
+                      setBigCard={setBigCard}
+                      zoomedCard={zoomedCard}
+                    /> :
+                    page === 'task' ?
+                      <Task vk_id={vk_id}
+                        setLoading={setLoading}
+                        setPoints={setPoints}
+                        messageWin={messageWin}
+                        showMessage={showMessage}
+                        setPage={setPage}
+                        points={points}
+                        showMessageAdditional={showMessageAdditional} /> :
+                      page === 'rules' ?
+                        <Rules setPage={setPage} /> :
+                        page === 'propose' ?
+                          <MyPropose
+                            setPage={setPage}
+                            vk_id={vk_id}
+                            setPoints={setPoints}
+                            points={points}
+                            setLoading={setLoading}
+                            showMessage={showMessage}
+                            showMessageAdditional={showMessageAdditional} /> : null}
             {loading ? <Loader loading={loading} /> : null}
             {messageWin ?
               <Message

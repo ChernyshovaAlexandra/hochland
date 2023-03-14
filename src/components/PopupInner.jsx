@@ -7,7 +7,7 @@ import img5 from '../assets/images/ozon.png'
 import img6 from '../assets/images/toster.png'
 import Button from "./Button";
 import Header from "./Header";
-
+import Rules from '../assets/Rules.pdf'
 
 const PopupInner = ({ setPage }) => {
     return (
@@ -70,6 +70,7 @@ const PopupInner = ({ setPage }) => {
 
             </div>
             <Button text={'Вперед'} classes="bg-yellow rounded-full py-3 px-12 mx-auto block w-fit text-center font-bold text-sm mt-4" onClick={() => setPage('cardgen')} />
+            <a className='text-white underline hover:no-underline text-reg mt-4 block mx-auto' href={Rules} target="_blank">Полные правила акции</a>
         </>
     )
 }

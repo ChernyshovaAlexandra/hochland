@@ -131,11 +131,17 @@ $red: #e60004;
         }
     }
 }
+.win-block {
+    @media screen and (max-width: 760px) {
+        max-height: 67vh;
+    }
+    max-height: 530px;
+}
 .red-bg {
     background: radial-gradient(59.82% 43.83% at 50% 50%, #ff9d9f 0%, #e60004 100%);
 }
 .arr {
-    &:hover {
+    &:not(:disabled):hover {
         background: #ebf7fd;
     }
 }
